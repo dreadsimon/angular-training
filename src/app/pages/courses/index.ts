@@ -1,2 +1,2 @@
-export * from './home.module';
-export * from './home.component'
+export * from './courses.module';
+export * from './courses.component'

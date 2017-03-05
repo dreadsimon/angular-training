@@ -4,16 +4,16 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 // routes
-import { routes } from './courses.routes';
+import { routes } from './home.routes';
 
 // custom components
-import { CoursesComponent } from './courses.component';
-import { CourseComponent } from './course/course.component';
+import { HomeComponent } from './home.component';
+import { TodoItemComponent } from './todo-item/todo-item.component';
 
 @NgModule({
 	declarations: [
-		CoursesComponent,
-		CourseComponent
+		HomeComponent,
+		TodoItemComponent
 	],
 	imports: [
 		routes,
@@ -23,7 +23,7 @@ import { CourseComponent } from './course/course.component';
 	],
 	providers: []
 })
-export class CoursesModule {
+export class HomeModule {
 	constructor() {
 	}
 }
