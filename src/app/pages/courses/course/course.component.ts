@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation, Input } from '@angular/core';
-import { Course } from '../../../core/entities';
-import { CourseStatusClasses } from '../../../core/enums';
+import { CourseItem } from '../../../entities';
 
 @Component({
 	selector: 'course',
@@ -10,12 +9,8 @@ import { CourseStatusClasses } from '../../../core/enums';
 	encapsulation: ViewEncapsulation.None
 })
 export class CourseComponent {
-	@Input() public course: Course;
+	@Input() public course: CourseItem;
 
 	constructor() {
-	}
-
-	public calculateStatusClass(status): string {
-		return CourseStatusClasses[status];
 	}
 }
