@@ -21,7 +21,6 @@ import { ENV_PROVIDERS } from './environment';
 import { ROUTES } from './app.routes';
 // App is our top level component
 import { AppComponent } from './app.component';
-import { CoursesComponent } from './pages/courses';
 import { NoContentComponent } from './pages/no-content';
 
 // Components
@@ -43,7 +42,6 @@ const APP_PROVIDERS = [
 	bootstrap: [AppComponent],
 	declarations: [
 		AppComponent,
-		CoursesComponent,
 		NoContentComponent
 	],
 	imports: [ // import Angular's modules
@@ -53,7 +51,8 @@ const APP_PROVIDERS = [
 		RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules}),
 		HeaderModule,
 		FooterModule,
-		LogoModule
+		LogoModule,
+		CoursesModule
 	],
 	providers: [ // expose our Services and Providers into Angular's dependency injection
 		ENV_PROVIDERS,
