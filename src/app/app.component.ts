@@ -20,7 +20,7 @@ import { AppState } from './app.service';
 		require('./styles/index.scss'),
 		require('./app.styles.scss')
 	],
-	template: require('./app.template.html')
+	templateUrl: './app.template.html'
 })
 export class AppComponent implements OnInit {
 

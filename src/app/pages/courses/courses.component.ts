@@ -5,8 +5,8 @@ import { CourseItem } from '../../entities';
 	selector: 'courses',
 	encapsulation: ViewEncapsulation.None,
 	providers: [],
-	styles: [require('./courses.styles.scss')],
-	template: require('./courses.template.html')
+	styles: ['./courses.styles.scss'],
+	templateUrl: './courses.template.html'
 })
 
 export class CoursesComponent implements OnInit, OnDestroy {

@@ -4,7 +4,7 @@ import { CourseItem } from '../../../entities';
 @Component({
 	selector: 'course',
 	templateUrl: 'course.component.html',
-	styles: [require('./course.component.scss')],
+	styles: ['./course.component.scss'],
 	providers: [],
 	encapsulation: ViewEncapsulation.None
 })
