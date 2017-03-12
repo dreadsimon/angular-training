@@ -1,15 +1,15 @@
 import { Component, ViewEncapsulation, Input } from '@angular/core';
-import { CourseItem } from '../../../entities';
+import { Course } from '../../../entities';
 
 @Component({
 	selector: 'course',
 	templateUrl: 'course.component.html',
-	styles: ['./course.component.scss'],
+	styleUrls: ['./course.component.scss'],
 	providers: [],
 	encapsulation: ViewEncapsulation.None
 })
 export class CourseComponent {
-	@Input() public course: CourseItem;
+	@Input() public course: Course;
 
 	constructor() {
 	}

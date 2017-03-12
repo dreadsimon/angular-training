@@ -1,13 +1,20 @@
-export  class CourseItem {
+interface CourseItem {
+	id: number;
+	title: string;
+	description: string;
+	date: Date;
+	duration: number;
+}
+
+class Course implements CourseItem {
+	public id: number;
 	public title: string;
 	public description: string;
 	public date: Date;
 	public duration: number;
 
-	constructor(title: string, description: string, date: Date, duration: number) {
-		this.title = title;
-		this.description = description;
-		this.date = date;
-		this.duration = duration;
+	constructor(id: number, title: string, description: string, date: Date, duration: number) {
 	}
 }
+
+export {Course};

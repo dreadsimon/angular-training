@@ -1,6 +1,13 @@
-<div class="courses-page">
+<div class="courses-page page">
 	<h4>Courses</h4>
+	<div class="utils row">
+		<div class="col-sm-6">
+			<searchbox></searchbox>
+		</div>
+		<div class="col-sm-6">
+			<button>Add course</button>
+	</div>
 	<div class="courses">
-		 <course *ngFor="let item of courses" [course]="item"></course> 
+		 <course *ngFor="let item of courses" [course]="item"></course>
 	</div>
 </div>

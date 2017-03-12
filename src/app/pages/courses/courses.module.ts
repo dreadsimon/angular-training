@@ -9,6 +9,7 @@ import { routes } from './courses.routes';
 // custom components
 import { CoursesComponent } from './courses.component';
 import { CourseComponent } from './course/course.component';
+import { SearchboxModule } from '../../components';
 
 @NgModule({
 	declarations: [
@@ -19,7 +20,8 @@ import { CourseComponent } from './course/course.component';
 		routes,
 		FormsModule,
 		ReactiveFormsModule,
-		CommonModule
+		CommonModule,
+		SearchboxModule
 	],
 	providers: []
 })

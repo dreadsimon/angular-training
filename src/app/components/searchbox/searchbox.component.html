@@ -1,0 +1,9 @@
+<div class="searchbox">
+		<input
+			type="search"
+			name="searchInput"
+			id="searchInput"
+			[(ngModel)]="searchText"/>
+		<button name="search" (click)="handleSearch()">Find</button>
+		<span>{{ searchText }}</span>
+</div>

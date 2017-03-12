@@ -3,7 +3,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 @Component({
 	selector: 'login',
 	templateUrl: 'login.component.html',
-	styles: [require('./login.component.scss')],
+	styleUrls: [('./login.component.scss')],
 	providers: [],
 	encapsulation: ViewEncapsulation.None
 })
