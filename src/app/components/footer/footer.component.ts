@@ -3,9 +3,13 @@ import { Component, ViewEncapsulation } from '@angular/core';
 @Component({
 	selector: 'main-footer',
 	templateUrl: './footer.component.html',
-	styles: [require('./footer.component.scss')],
-	providers: [],
-	encapsulation: ViewEncapsulation.None
+	styleUrls: [
+		'./footer.component.scss',
+		'../../styles/vendors.scss',
+		'../../styles/index.scss',
+		'../../app.styles.scss'
+	],
+	providers: []
 })
 export class FooterComponent {
 	constructor() {

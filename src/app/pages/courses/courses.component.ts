@@ -3,9 +3,13 @@ import { Subscription } from 'rxjs';
 import { Course } from '../../entities';
 @Component({
 	selector: 'courses',
-	encapsulation: ViewEncapsulation.None,
 	providers: [],
-	styleUrls: ['./courses.styles.scss'],
+	styleUrls: [
+		'./courses.styles.scss',
+		'../../styles/vendors.scss',
+		'../../styles/index.scss',
+		'../../app.styles.scss'
+	],
 	templateUrl: './courses.template.html'
 })
 
@@ -51,6 +55,10 @@ export class CoursesComponent implements OnInit, OnDestroy {
 				duration: 2
 			}
 		];
+	}
+
+	handleCourseId(id) {
+		console.log('output id', id);
 	}
 
 	public ngOnDestroy() {

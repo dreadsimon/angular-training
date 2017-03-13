@@ -4,8 +4,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 	selector: 'logo',
 	templateUrl: 'logo.component.html',
 	styleUrls: [('./logo.component.scss')],
-	providers: [],
-	encapsulation: ViewEncapsulation.None
+	providers: []
 })
 export class LogoComponent {
 	constructor() {

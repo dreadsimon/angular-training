@@ -1,7 +1,13 @@
 <div class="course row">
     <div class="col-sm-1">{{course.id}}</div>
-    <div class="col-sm-3">{{course.title}}</div>
-	<div class="col-sm-4">{{course.description}}</div>
-	<div class="col-sm-2">{{course.date | date : 'MM/dd/yyyy'}}</div>
-	<div class="col-sm-1">{{course.duration}} h</div>
+    <div class="col-sm-2">{{course.title}}</div>
+    <div class="col-sm-3">{{course.description}}</div>
+    <div class="col-sm-2">{{course.date | date : 'MM/dd/yyyy'}}</div>
+    <div class="col-sm-1">{{course.duration}} h</div>
+    <div class="col-sm-2">
+        <div class="btn-group">
+            <button class="btn btn-primary">Edit</button>
+            <button class="btn btn-danger" (click)="handleDelete()">Delete</button>            
+        </div>
+    </div>
 </div>

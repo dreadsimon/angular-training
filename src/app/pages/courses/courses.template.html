@@ -5,10 +5,10 @@
 			<searchbox></searchbox>
 		</div>
 		<div class="col-sm-6">
-			<button>Add course</button>
+			<button type="button" class="btn btn-success pull-right">Add course</button>
 		</div>
 	</div>
 	<div class="courses">
-		 <course *ngFor="let item of courses" [course]="item"></course>
+		 <course *ngFor="let item of courses" [course]="item" (courseId)="handleCourseId($event)"></course>
 	</div>
 </div>

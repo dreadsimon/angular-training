@@ -1,9 +1,13 @@
-<div class="searchbox">
+<div class="searchbox form-inline">
+	<div class="form-group">
 		<input
-			type="search"
-			name="searchInput"
-			id="searchInput"
-			[(ngModel)]="searchText"/>
-		<button name="search" (click)="handleSearch()">Find</button>
-		<span>{{ searchText }}</span>
+		type="search"
+		name="searchInput"
+		id="searchInput"
+		class="form-control"
+		placeholder="Search phrase..."
+		[(ngModel)]="searchText"/>
+	</div>
+	<button name="search" (click)="handleSearch()" class="btn btn-default">Find</button>
+	<span>{{ searchText }}</span>
 </div>
