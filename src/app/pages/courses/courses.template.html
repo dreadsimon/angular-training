@@ -9,6 +9,6 @@
 		</div>
 	</div>
 	<div class="courses">
-		 <course *ngFor="let item of courses" [course]="item" (courseId)="handleCourseId($event)"></course>
+		 <course *ngFor="let item of courses" [course]="item" (onDelete)="handleCourseId($event)"></course>
 	</div>
 </div>

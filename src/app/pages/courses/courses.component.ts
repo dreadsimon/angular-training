@@ -3,24 +3,16 @@ import { Subscription } from 'rxjs';
 import { Course } from '../../entities';
 @Component({
 	selector: 'courses',
-	providers: [],
-	styleUrls: [
-		'./courses.styles.scss',
-		'../../styles/vendors.scss',
-		'../../styles/index.scss',
-		'../../app.styles.scss'
-	],
-	templateUrl: './courses.template.html'
+	templateUrl: './courses.template.html',
+	styleUrls: ['./courses.styles.scss']
 })
 
 export class CoursesComponent implements OnInit, OnDestroy {
-	private courses: Course[];
-	private currDate: Date;
+	private courses: Course[] = [];
+	private currDate = new Date();
 
 	constructor() {
 		console.log('Home page constructor');
-		this.currDate = new Date();
-		this.courses = [];
 	}
 
 	public ngOnInit() {
@@ -57,7 +49,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		];
 	}
 
-	handleCourseId(id) {
+	private handleCourseId(id) {
 		console.log('output id', id);
 	}
 
