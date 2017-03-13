@@ -1,0 +1,14 @@
+<div class="courses-page page">
+	<h4>Courses</h4>
+	<div class="utils row">
+		<div class="col-sm-6">
+			<searchbox></searchbox>
+		</div>
+		<div class="col-sm-6">
+			<button type="button" class="btn btn-success pull-right">Add course</button>
+		</div>
+	</div>
+	<div class="courses">
+		 <course *ngFor="let item of courses" [course]="item" (onDelete)="handleCourseId($event)"></course>
+	</div>
+</div>

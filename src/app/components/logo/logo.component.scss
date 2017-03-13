@@ -1,0 +1,23 @@
+@import "../../styles/variables/colors.scss";
+
+.logo {
+	float: left;
+	padding-top: 14px;
+	overflow: hidden;
+	width: 200px;
+}
+
+.logo-img {
+	float:left;
+	margin: 0 10px 0 0;
+}
+
+.logo-title {
+	line-height: 1;
+	font-size: 1.6rem;
+	margin: 5px 0 0;
+}
+
+.logo-sub-title {
+	font-size: 0.7rem;
+}

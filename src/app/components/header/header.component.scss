@@ -1,0 +1,49 @@
+@import "../../styles/variables/colors.scss";
+
+.main-navbar {
+	height: 100px;
+	background-color: $c-primary;
+	color: $white;
+}
+
+.breadcrumbs {
+	background: $white;
+	color: $black;
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+}
+
+.menu {
+	float: left;
+	font-size: 0.8rem;
+	padding-top: 20px;
+
+	.menu-item {
+		text-transform: uppercase;
+		border-left: solid 1px $white;
+		border-right: solid 1px $white;
+		padding: 0 15px;
+		display: inline-block;
+		position: relative;
+		cursor: pointer;
+
+		&:first-child {
+			border: none;
+		}
+
+		&:last-child {
+			border: none;
+		}
+
+		&.active {
+			background-color: darken($c-primary, 10%);
+		}
+	}
+}
+
+.login {
+	float:right;
+}
