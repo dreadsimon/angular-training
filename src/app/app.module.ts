@@ -30,9 +30,11 @@ import { HeaderModule, FooterModule, LogoModule } from './components';
 import { CoursesModule } from './pages/courses';
 
 // Services
+import { CourseService } from './services';
 
 // Application wide providers
 const APP_PROVIDERS = [
+	CourseService
 ];
 
 /**

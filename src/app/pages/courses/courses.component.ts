@@ -1,6 +1,8 @@
 import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Course } from '../../entities';
+import { CourseService } from '../../services';
+
 @Component({
 	selector: 'courses',
 	providers: [],
@@ -16,8 +18,10 @@ import { Course } from '../../entities';
 export class CoursesComponent implements OnInit, OnDestroy {
 	private courses: Course[];
 	private currDate: Date;
+	private isLoading: boolean = false;
+	private courseServiceSubscription: Subscription;
 
-	constructor() {
+	constructor(private courseService: CourseService) {
 		console.log('Home page constructor');
 		this.currDate = new Date();
 		this.courses = [];
@@ -25,36 +29,12 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 	public ngOnInit() {
 		console.log('Home page init');
-		this.courses = [
-			{
-				id: 1,
-				title: 'Video course 1',
-				description: 'Lorem ipsum',
-				date: this.currDate,
-				duration: 1
-			},
-			{
-				id: 2,
-				title: 'Video course 2',
-				description: 'Lorem ipsum',
-				date: this.currDate,
-				duration: 2.5
-			},
-			{
-				id: 3,
-				title: 'Video course 3',
-				description: 'Lorem ipsum',
-				date: this.currDate,
-				duration: 0.5
-			},
-			{
-				id: 4,
-				title: 'Video course 4',
-				description: 'Lorem ipsum',
-				date: this.currDate,
-				duration: 2
-			}
-		];
+		this.isLoading = true;
+		this.courseServiceSubscription = this.courseService.getList().subscribe((res: Course[]) => {
+			console.log('SUBSCP');
+			this.courses = res;
+			this.isLoading = false;
+		});
 	}
 
 	handleCourseId(id) {
@@ -62,5 +42,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	}
 
 	public ngOnDestroy() {
+		this.courseServiceSubscription.unsubscribe();
 	}
 }
