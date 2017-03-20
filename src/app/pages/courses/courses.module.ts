@@ -10,6 +10,7 @@ import { routes } from './courses.routes';
 import { CoursesComponent } from './courses.component';
 import { CourseComponent } from './course/course.component';
 import { SearchboxModule } from '../../components';
+import { Md2Module }  from 'md2';
 
 @NgModule({
 	declarations: [
@@ -21,7 +22,8 @@ import { SearchboxModule } from '../../components';
 		FormsModule,
 		ReactiveFormsModule,
 		CommonModule,
-		SearchboxModule
+		SearchboxModule,
+		Md2Module.forRoot()
 	],
 	providers: []
 })

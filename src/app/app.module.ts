@@ -29,6 +29,7 @@ import { Md2Module }  from 'md2';
 
 // Pages
 import { CoursesModule } from './pages/courses';
+import { LoginModule } from './pages/login';
 
 // Services
 import { CourseService } from './services';
@@ -56,7 +57,8 @@ const APP_PROVIDERS = [
 		FooterModule,
 		LogoModule,
 		CoursesModule,
-		Md2Module.forRoot()
+		LoginModule,
+		Md2Module.forRoot(),
 	],
 	providers: [ // expose our Services and Providers into Angular's dependency injection
 		ENV_PROVIDERS,

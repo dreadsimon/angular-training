@@ -6,11 +6,21 @@ import coursesJSON from '../data/courses';
 
 @Injectable()
 export class CourseService {
-    courses: Course[] = coursesJSON;
-    
-    constructor() {
+    courses: Course[];
 
+    constructor() {
+         this.fillCourses();
     }
+
+    private fillCourses() {
+       if (!this.courses) {
+           this.courses = [];
+       }
+
+       (<any[]>coursesJSON).forEach(a => {
+           this.courses.push(Object.assign(new Course(null, null, null, null, null), a));
+       });
+   }
 
     public getList (): Observable<Course[]> {
         return Observable.of<Course[]>(this.courses);
@@ -25,6 +35,6 @@ export class CourseService {
     }
 
     public delete (id: number) {
-        this.courses = this.courses.filter((course) => course.id === id);
+        this.courses = this.courses.filter((course) => course.id !== id);
     }
 }

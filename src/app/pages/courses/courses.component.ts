@@ -21,6 +21,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	private currDate: Date;
 	private isLoading: boolean = false;
 	private courseServiceSubscription: Subscription;
+	private deleteId: number;
 
 	constructor(private courseService: CourseService) {
 		console.log('Home page constructor');
@@ -38,12 +39,22 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	handleCourseId(id) {
-		console.log('output id', id);
+	handleCourseId(id, dialog: Md2Dialog) {
+		this.deleteId = id;
+		dialog.open();
 	}
 
-	open(dialog: Md2Dialog) {
-		dialog.open();
+	handleDelete(dialog: any) {
+		this.courseService.delete(this.deleteId);
+		this.courseService.getList().subscribe((res: Course[]) => {
+			this.courses = res;
+		});
+		this.deleteId = 0;
+		dialog.close();
+	}
+
+	close(dialog: any) {
+		dialog.close();
 	}
 
 	public ngOnDestroy() {

@@ -20,6 +20,5 @@ export class CourseComponent {
 
 	handleDelete() {
 		this.courseId.emit(this.course.id);
-		console.log('delete clicked');
 	}
 }
