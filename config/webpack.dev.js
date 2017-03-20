@@ -176,6 +176,10 @@ module.exports = function (options) {
             '@angular/router',
             '@angularclass/hmr',
             'rxjs',
+            {
+              name: 'md2',
+              path: 'md2/bundles/md2.umd.js'
+            }
           ]
         },
         dllDir: helpers.root('dll'),

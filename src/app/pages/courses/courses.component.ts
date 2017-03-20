@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Course } from '../../entities';
 import { CourseService } from '../../services';
+import { Md2Dialog } from 'md2';
 
 @Component({
 	selector: 'courses',
@@ -39,6 +40,10 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 	handleCourseId(id) {
 		console.log('output id', id);
+	}
+
+	open(dialog: Md2Dialog) {
+		dialog.open();
 	}
 
 	public ngOnDestroy() {

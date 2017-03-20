@@ -11,4 +11,8 @@
 	<div class="courses">
 		 <course *ngFor="let item of courses" [course]="item" (courseId)="handleCourseId($event)"></course>
 	</div>
+	<md2-dialog #confirm>
+		Body Content...
+	</md2-dialog>
+	<button (click)="open(confirm)">Open Confirm Dialog</button>
 </div>
