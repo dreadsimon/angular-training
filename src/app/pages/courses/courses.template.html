@@ -1,3 +1,10 @@
+<md2-dialog #confirm>
+	<md2-dialog-title>Do you really want to delete {{deleteId}}?</md2-dialog-title>
+	<md2-dialog-footer>
+        <button type="button" class="btn btn-success" (click)="handleDelete(confirm)">Ok</button>
+        <button type="button" class="btn" (click)="close(confirm)">Cancel</button>
+  	</md2-dialog-footer>
+</md2-dialog>
 <div class="courses-page page">
 	<h4>Courses</h4>
 	<div class="utils row">
@@ -9,6 +16,6 @@
 		</div>
 	</div>
 	<div class="courses">
-		 <course *ngFor="let item of courses" [course]="item" (onDelete)="handleCourseId($event)"></course>
+		 <course *ngFor="let item of courses" [course]="item" (courseId)="handleCourseId($event, confirm)"></course>
 	</div>
 </div>

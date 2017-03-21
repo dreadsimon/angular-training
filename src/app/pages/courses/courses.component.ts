@@ -1,58 +1,63 @@
 import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Course } from '../../entities';
+import { CourseService } from '../../services';
+import { Md2Dialog } from 'md2';
+
 @Component({
 	selector: 'courses',
-	templateUrl: './courses.template.html',
-	styleUrls: ['./courses.styles.scss']
+	providers: [],
+	styleUrls: [
+		'./courses.styles.scss',
+		'../../styles/vendors.scss',
+		'../../styles/index.scss',
+		'../../app.styles.scss'
+	],
+	templateUrl: './courses.template.html'
 })
 
 export class CoursesComponent implements OnInit, OnDestroy {
-	private courses: Course[] = [];
-	private currDate = new Date();
+	private courses: Course[];
+	private currDate: Date;
+	private isLoading: boolean = false;
+	private courseServiceSubscription: Subscription;
+	private deleteId: number;
 
-	constructor() {
+	constructor(private courseService: CourseService) {
 		console.log('Home page constructor');
+		this.currDate = new Date();
+		this.courses = [];
 	}
 
 	public ngOnInit() {
 		console.log('Home page init');
-		this.courses = [
-			{
-				id: 1,
-				title: 'Video course 1',
-				description: 'Lorem ipsum',
-				date: this.currDate,
-				duration: 1
-			},
-			{
-				id: 2,
-				title: 'Video course 2',
-				description: 'Lorem ipsum',
-				date: this.currDate,
-				duration: 2.5
-			},
-			{
-				id: 3,
-				title: 'Video course 3',
-				description: 'Lorem ipsum',
-				date: this.currDate,
-				duration: 0.5
-			},
-			{
-				id: 4,
-				title: 'Video course 4',
-				description: 'Lorem ipsum',
-				date: this.currDate,
-				duration: 2
-			}
-		];
+		this.isLoading = true;
+		this.courseServiceSubscription = this.courseService.getList().subscribe((res: Course[]) => {
+			console.log('SUBSCP');
+			this.courses = res;
+			this.isLoading = false;
+		});
 	}
 
-	private handleCourseId(id) {
-		console.log('output id', id);
+	handleCourseId(id, dialog: Md2Dialog) {
+		this.deleteId = id;
+		dialog.open();
+	}
+
+	handleDelete(dialog: any) {
+		this.courseService.delete(this.deleteId);
+		this.courseService.getList().subscribe((res: Course[]) => {
+			this.courses = res;
+		});
+		this.deleteId = 0;
+		dialog.close();
+	}
+
+	close(dialog: any) {
+		dialog.close();
 	}
 
 	public ngOnDestroy() {
+		this.courseServiceSubscription.unsubscribe();
 	}
 }
