@@ -4,26 +4,20 @@ import { AuthService } from '../../services';
 @Component({
 	selector: 'login',
 	templateUrl: 'login.component.html',
-	styleUrls: [
-		'./login.component.scss',
-		'../../styles/vendors.scss',
-		'../../styles/index.scss',
-		'../../app.styles.scss'
-	],
-	providers: []
+	styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-	public login: string;
+	private login: string;
 
 	constructor(private authService: AuthService) {
 		this.login = this.authService.getUserInfo();
 	}
 
-	logout() {
+	private logout() {
 		this.authService.logout();
 	}
 
-	isAuthenticated() {
+	private isAuthenticated() {
 		return this.authService.isAuthenticated();
 	}
 }

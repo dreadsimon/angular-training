@@ -19,7 +19,8 @@ import { AppState } from './app.service';
 		'./styles/index.scss',
 		'./app.styles.scss'
 	],
-	templateUrl: './app.template.html'
+	templateUrl: './app.template.html',
+	encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
 

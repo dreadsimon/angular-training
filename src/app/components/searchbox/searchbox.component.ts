@@ -1,25 +1,18 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
 	selector: 'searchbox',
 	templateUrl: 'searchbox.component.html',
-	styleUrls: [
-		'./searchbox.component.scss',
-		'../../styles/vendors.scss',
-		'../../styles/index.scss',
-		'../../app.styles.scss'
-	],
-	providers: [],
-	encapsulation: ViewEncapsulation.None
+	styleUrls: ['./searchbox.component.scss']
 })
 export class SearchboxComponent {
-	public searchText: string;
+	private searchText: string;
 
 	constructor() {
 		this.searchText = '';
 	}
 
-	handleSearch() {
+	private handleSearch() {
 	    console.log('find', this.searchText);
   	}
 }
