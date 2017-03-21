@@ -1,0 +1,12 @@
+<div class="login-page page">
+	<h4>Login</h4>
+	<div class="login-form col-sm-3">
+		 <div class="form-group">
+		 	<input type="text" class="form-control" id="login" placeholder="login" [(ngModel)]="credentials.login" />
+		 </div>
+		 <div class="form-group">
+		 	<input type="password" class="form-control" id="login" placeholder="password" [(ngModel)]="credentials.password" />
+		 </div>
+	 	<button type="button" class="btn btn-primary" (click)="handleLogin()">Go</button>
+	</div>
+</div>
