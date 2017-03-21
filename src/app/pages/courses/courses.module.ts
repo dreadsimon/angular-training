@@ -11,6 +11,8 @@ import { CoursesComponent } from './courses.component';
 import { CourseComponent } from './course/course.component';
 import { SearchboxModule } from '../../components';
 
+import { CourseService } from './../../services/course.service';
+
 @NgModule({
 	declarations: [
 		CoursesComponent,
@@ -23,7 +25,7 @@ import { SearchboxModule } from '../../components';
 		CommonModule,
 		SearchboxModule
 	],
-	providers: []
+	providers: [CourseService]
 })
 export class CoursesModule {
 	constructor() {
