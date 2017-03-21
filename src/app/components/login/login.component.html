@@ -1,4 +1,9 @@
 <div class="login">
-	<div class="name">user login</div>
-	<a class="name" href="/logout">logout</a>
+	<div *ngIf="!isAuthenticated()">
+		<a [routerLink]="'login'">Login</a>
+	</div>
+	<div *ngIf="isAuthenticated()">
+		<div class="name">{{login}}</div>
+		<a (click)="logout()">logout</a>
+	</div>
 </div>

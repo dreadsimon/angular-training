@@ -16,6 +16,12 @@ class User implements UserItem {
 	public active: boolean;
 
 	constructor(id: number, name: string, surname: string, login: string, password: string, active: boolean) {
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.login = login;
+		this.password = password;
+		this.active = active;
 	}
 }
 

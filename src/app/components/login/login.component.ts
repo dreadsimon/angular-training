@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { AuthService } from '../../services';
 
 @Component({
 	selector: 'login',
@@ -12,7 +13,17 @@ import { Component, ViewEncapsulation } from '@angular/core';
 	providers: []
 })
 export class LoginComponent {
-	constructor() {
+	public login: string;
 
+	constructor(private authService: AuthService) {
+		this.login = this.authService.getUserInfo();
+	}
+
+	logout() {
+		this.authService.logout();
+	}
+
+	isAuthenticated() {
+		return this.authService.isAuthenticated();
 	}
 }
