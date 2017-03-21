@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
 	selector: 'searchbox',
@@ -6,13 +6,13 @@ import { Component, ViewEncapsulation } from '@angular/core';
 	styleUrls: ['./searchbox.component.scss']
 })
 export class SearchboxComponent {
-	public searchText: string;
+	private searchText: string;
 
 	constructor() {
 		this.searchText = '';
 	}
 
-	handleSearch() {
+	private handleSearch() {
 	    console.log('find', this.searchText);
   	}
 }

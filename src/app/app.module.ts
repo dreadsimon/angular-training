@@ -30,9 +30,13 @@ import { HeaderModule, FooterModule, LogoModule } from './components';
 import { CoursesModule } from './pages/courses';
 
 // Services
+import { AuthService } from './services';
+import { AuthGuard } from './services/auth.guard';
 
 // Application wide providers
 const APP_PROVIDERS = [
+	AuthService,
+	AuthGuard
 ];
 
 /**

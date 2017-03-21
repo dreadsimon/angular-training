@@ -1,4 +1,5 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
+import { AuthService } from './../../services/auth.service';
 
 @Component({
 	selector: 'login',
@@ -6,7 +7,17 @@ import { Component, ViewEncapsulation } from '@angular/core';
 	styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-	constructor() {
+	private login: string;
 
+	constructor(private authService: AuthService) {
+		this.login = this.authService.getUserInfo();
+	}
+
+	private logout() {
+		this.authService.logout();
+	}
+
+	private isAuthenticated() {
+		return this.authService.isAuthenticated();
 	}
 }
