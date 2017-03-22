@@ -6,7 +6,7 @@ interface CourseItem {
 	duration: number;
 }
 
-class Course implements CourseItem {
+export class Course implements CourseItem {
 	public id: number;
 	public title: string;
 	public description: string;
@@ -16,5 +16,3 @@ class Course implements CourseItem {
 	constructor(id: number, title: string, description: string, date: Date, duration: number) {
 	}
 }
-
-export {Course};

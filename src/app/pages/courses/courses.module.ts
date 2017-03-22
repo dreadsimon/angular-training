@@ -12,6 +12,8 @@ import { CourseComponent } from './course/course.component';
 import { SearchboxModule } from '../../components';
 import { Md2Module }  from 'md2';
 
+import { CourseService } from './../../services/course.service';
+
 @NgModule({
 	declarations: [
 		CoursesComponent,
@@ -23,9 +25,9 @@ import { Md2Module }  from 'md2';
 		ReactiveFormsModule,
 		CommonModule,
 		SearchboxModule,
-		Md2Module.forRoot()
+        Md2Module.forRoot()
 	],
-	providers: []
+	providers: [CourseService]
 })
 export class CoursesModule {
 	constructor() {

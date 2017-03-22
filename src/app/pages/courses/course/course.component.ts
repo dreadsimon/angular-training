@@ -4,21 +4,17 @@ import { Course } from '../../../entities';
 @Component({
 	selector: 'course',
 	templateUrl: 'course.component.html',
-	styleUrls: [
-		'./course.component.scss',
-		'../../../styles/vendors.scss',
-		'../../../styles/index.scss',
-		'../../../app.styles.scss'],
-	providers: []
+	styleUrls: ['./course.component.scss']
 })
 export class CourseComponent {
 	@Input() public course: Course;
-	@Output() public courseId = new EventEmitter();
+	@Output() public onDelete = new EventEmitter<number>();
 
 	constructor() {
 	}
 
-	handleDelete() {
-		this.courseId.emit(this.course.id);
+	private handleDelete() {
+		this.onDelete.emit(this.course.id);
+		console.log('delete clicked');
 	}
 }

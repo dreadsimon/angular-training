@@ -25,20 +25,19 @@ import { NoContentComponent } from './pages/no-content';
 
 // Components
 import { HeaderModule, FooterModule, LogoModule } from './components';
-import { Md2Module }  from 'md2';
 
 // Pages
 import { CoursesModule } from './pages/courses';
 import { LoginModule } from './pages/login';
 
 // Services
-import { CourseService } from './services';
 import { AuthService } from './services';
+import { AuthGuard } from './services/auth.guard';
 
 // Application wide providers
 const APP_PROVIDERS = [
-	CourseService,
-	AuthService
+	AuthService,
+	AuthGuard
 ];
 
 /**
@@ -59,8 +58,7 @@ const APP_PROVIDERS = [
 		FooterModule,
 		LogoModule,
 		CoursesModule,
-		LoginModule,
-		Md2Module.forRoot(),
+		LoginModule
 	],
 	providers: [ // expose our Services and Providers into Angular's dependency injection
 		ENV_PROVIDERS,
