@@ -22,11 +22,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 	private credentials: {login: string, password: string};
 
 	constructor(private authService: AuthService) {
-		this.credentials = {login: '', password: ''};
+		this.credentials = Object.assign({}, {login: '', password: ''});
 	}
 
 	handleLogin() {
-		console.log(this.credentials);
 		this.authService.login(this.credentials.login, this.credentials.password);
 	}
 	public ngOnInit() {

@@ -5,8 +5,10 @@ import {
 	Component,
 	OnInit,
 	ViewEncapsulation,
-	ChangeDetectionStrategy
+	ChangeDetectionStrategy,
+	NgZone
 } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { AppState } from './app.service';
 
 /*
@@ -25,11 +27,18 @@ import { AppState } from './app.service';
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
+	private ngZoneSubscription: Subscription;
 
-	constructor() {
+	constructor(private ngZone: NgZone) {
 	}
 
 	public ngOnInit() {
+		this.ngZoneSubscription = this.ngZone.onUnstable.subscribe((res: any) => {
+			console.log('ngZone on Unstable', new Date());
+		});
+		this.ngZoneSubscription = this.ngZone.onStable.subscribe((res: any) => {
+			console.log('ngZone onStable', new Date());
+		});
 	}
 
 }

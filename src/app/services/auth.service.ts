@@ -14,7 +14,6 @@ export class AuthService {
     }
 
     public login(login: string, password: string) {
-        console.log('aaaaaaaaaaaa', login, password, this.user);
         if (login === this.user.login && password === this.user.password) {
             console.log('logged in: ', login);
             localStorage.setItem('login', login);

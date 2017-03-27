@@ -14,7 +14,7 @@ import { Md2Dialog } from 'md2';
 		'../../app.styles.scss'
 	],
 	templateUrl: './courses.template.html',
-	changeDetection: ChangeDetectionStrategy.OnPush
+	changeDetection: ChangeDetectionStrategy.Default
 })
 
 export class CoursesComponent implements OnInit, OnDestroy {
@@ -25,7 +25,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	private deleteId: number;
 
 	constructor(private courseService: CourseService) {
-		console.log('Home page constructor');
 		this.currDate = new Date();
 		this.courses = [];
 	}
@@ -34,7 +33,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		console.log('Home page init');
 		this.isLoading = true;
 		this.courseServiceSubscription = this.courseService.getList().subscribe((res: Course[]) => {
-			console.log('SUBSCP');
 			this.courses = res;
 			this.isLoading = false;
 		});

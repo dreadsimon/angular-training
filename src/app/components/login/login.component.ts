@@ -12,6 +12,7 @@ export class LoginComponent {
 
 	constructor(private authService: AuthService) {
 		this.login = this.authService.getUserInfo();
+		console.log('login constructor', this.login);
 	}
 
 	private logout() {
@@ -19,6 +20,7 @@ export class LoginComponent {
 	}
 
 	private isAuthenticated() {
+		console.log('login comp isAUth', this.authService.isAuthenticated());
 		return this.authService.isAuthenticated();
 	}
 }
