@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
 	selector: 'searchbox',
 	templateUrl: 'searchbox.component.html',
-	styleUrls: ['./searchbox.component.scss']
+	styleUrls: ['./searchbox.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchboxComponent {
 	private searchText: string;

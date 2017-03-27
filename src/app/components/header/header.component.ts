@@ -1,9 +1,10 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
 	selector: 'main-header',
 	templateUrl: 'header.component.html',
-	styleUrls: ['./header.component.scss']
+	styleUrls: ['./header.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
 	constructor() {

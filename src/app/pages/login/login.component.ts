@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../services';
 import { User } from '../../entities'
@@ -12,7 +12,8 @@ import { User } from '../../entities'
 		'../../styles/index.scss',
 		'../../app.styles.scss'
 	],
-	templateUrl: './login.template.html'
+	templateUrl: './login.template.html',
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class LoginComponent implements OnInit, OnDestroy {

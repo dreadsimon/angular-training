@@ -4,7 +4,8 @@
 import {
 	Component,
 	OnInit,
-	ViewEncapsulation
+	ViewEncapsulation,
+	ChangeDetectionStrategy
 } from '@angular/core';
 import { AppState } from './app.service';
 
@@ -20,7 +21,8 @@ import { AppState } from './app.service';
 		'./app.styles.scss'
 	],
 	templateUrl: './app.template.html',
-	encapsulation: ViewEncapsulation.None
+	encapsulation: ViewEncapsulation.None,
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
 

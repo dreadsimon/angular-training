@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Course } from '../../entities';
 import { CourseService } from '../../services';
@@ -13,7 +13,8 @@ import { Md2Dialog } from 'md2';
 		'../../styles/index.scss',
 		'../../app.styles.scss'
 	],
-	templateUrl: './courses.template.html'
+	templateUrl: './courses.template.html',
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class CoursesComponent implements OnInit, OnDestroy {
