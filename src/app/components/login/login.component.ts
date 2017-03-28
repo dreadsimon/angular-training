@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from './../../services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'login',
@@ -8,11 +9,16 @@ import { AuthService } from './../../services/auth.service';
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent {
-	private login: string;
+	public login: string;
+	private authServiceSubscription: Subscription;
 
 	constructor(private authService: AuthService) {
-		this.login = this.authService.getUserInfo();
-		console.log('login constructor', this.login);
+	}
+
+	public ngOnInit() {
+		this.authServiceSubscription = this.authService.getUserInfo().subscribe((res: string) => {
+			this.login = res;
+		});
 	}
 
 	private logout() {

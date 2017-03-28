@@ -37,7 +37,7 @@ export class AuthService {
         return false;
     }
 
-    public getUserInfo() {
-        return localStorage.getItem('login');
+    public getUserInfo(): Observable<String> {
+        return Observable.of<String>(localStorage.getItem('login'));
     }
 }

@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 		this.credentials = Object.assign({}, {login: '', password: ''});
 	}
 
-	handleLogin() {
+	private handleLogin() {
 		this.authService.login(this.credentials.login, this.credentials.password);
 	}
 	public ngOnInit() {
