@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { LoginComponent } from './loader.component';
+import { LoaderComponent } from './loader.component';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
 	declarations: [LoaderComponent],
 	imports: [RouterModule, CommonModule],
-	exports: [LoginComponent]
+	exports: [LoaderComponent]
 })
 export class LoginModule {
 	constructor() {

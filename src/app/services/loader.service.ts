@@ -18,6 +18,6 @@ export class LoaderService {
     }
 
     public isVisible() {
-        return this.visibility;
+        return Observable.of<Boolean>(this.visibility);
     }
 }

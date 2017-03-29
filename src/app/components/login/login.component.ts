@@ -26,7 +26,8 @@ export class LoginComponent {
 	}
 
 	private isAuthenticated() {
-		console.log('login comp isAUth', this.authService.isAuthenticated());
+		console.log('login comp isAuthenticated', this.authService.isAuthenticated());
+
 		return this.authService.isAuthenticated();
 	}
 }

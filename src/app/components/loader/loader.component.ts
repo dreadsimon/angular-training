@@ -10,12 +10,15 @@ import { Subscription } from 'rxjs';
 })
 export class LoaderComponent {
     private show: boolean;
+    private authServiceSubscription: Subscription;
 
-	constructor() {
-        this.show = true;
+	constructor(private loaderService: LoaderService) {
+        this.show = false;
 	}
 
 	public ngOnInit() {
-
+        this.authServiceSubscription = this.loaderService.isVisible().subscribe((res: boolean) => {
+            this.show = res;
+        });
 	}
 }

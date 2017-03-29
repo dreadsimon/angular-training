@@ -14,7 +14,7 @@ import { Md2Dialog } from 'md2';
 		'../../app.styles.scss'
 	],
 	templateUrl: './courses.template.html',
-	changeDetection: ChangeDetectionStrategy.Default
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class CoursesComponent implements OnInit, OnDestroy {
