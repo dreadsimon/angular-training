@@ -1,12 +1,11 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from './../../services/auth.service';
 import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'login',
 	templateUrl: 'login.component.html',
-	styleUrls: ['./login.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+	styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
 	public login: string;
@@ -26,8 +25,6 @@ export class LoginComponent {
 	}
 
 	private isAuthenticated() {
-		console.log('login comp isAuthenticated', this.authService.isAuthenticated());
-
 		return this.authService.isAuthenticated();
 	}
 }

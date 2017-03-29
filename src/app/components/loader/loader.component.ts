@@ -1,24 +1,25 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { LoaderService } from './../../services/loader.service';
 import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'loader',
 	templateUrl: 'loader.component.html',
-	styleUrls: ['./loader.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+	styleUrls: ['./loader.component.scss']
 })
 export class LoaderComponent {
     private show: boolean;
-    private authServiceSubscription: Subscription;
+    private loaderServiceSubscription: Subscription;
 
 	constructor(private loaderService: LoaderService) {
         this.show = false;
 	}
 
 	public ngOnInit() {
-        this.authServiceSubscription = this.loaderService.isVisible().subscribe((res: boolean) => {
+        this.loaderServiceSubscription = this.loaderService.visibility.subscribe((res: boolean) => {
             this.show = res;
+            console.log('loaderServiceSubscription', this.show);
         });
 	}
+
 }

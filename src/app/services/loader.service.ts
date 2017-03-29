@@ -3,21 +3,28 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class LoaderService {
-    private visibility: boolean;
+    public visibility: Observable<Boolean>;
 
     constructor() {
-        this.visibility = false;
+        this.visibility = new Observable(observer => {
+            observer.next(false);
+            observer.complete();
+        });
     }
 
     public show() {
-        this.visibility = true;
+        console.log('show loader');
+        this.visibility = new Observable(observer => {
+            observer.next(true);
+            observer.complete();
+        });
     }
 
     public hide() {
-        this.visibility = false;
-    }
-
-    public isVisible() {
-        return Observable.of<Boolean>(this.visibility);
+        console.log('hide loader');
+        this.visibility = new Observable(observer => {
+            observer.next(false);
+            observer.complete();
+        });
     }
 }

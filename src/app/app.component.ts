@@ -5,7 +5,6 @@ import {
 	Component,
 	OnInit,
 	ViewEncapsulation,
-	ChangeDetectionStrategy,
 	NgZone
 } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -23,11 +22,12 @@ import { AppState } from './app.service';
 		'./app.styles.scss'
 	],
 	templateUrl: './app.template.html',
-	encapsulation: ViewEncapsulation.None,
-	changeDetection: ChangeDetectionStrategy.OnPush
+	encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
 	private ngZoneSubscription: Subscription;
+	private loaderSubscription: Subscription;
+	private isLoading: boolean;
 
 	constructor(private ngZone: NgZone) {
 	}
