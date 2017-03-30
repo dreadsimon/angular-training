@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy, ChangeDetectionStrategy, NgZone, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Course } from '../../entities';
 import { CourseService } from '../../services';
@@ -7,13 +7,7 @@ import { Md2Dialog } from 'md2';
 
 @Component({
 	selector: 'courses',
-	providers: [],
-	styleUrls: [
-		'./courses.styles.scss',
-		'../../styles/vendors.scss',
-		'../../styles/index.scss',
-		'../../app.styles.scss'
-	],
+	styleUrls: ['./courses.styles.scss'],
 	templateUrl: './courses.template.html',
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -24,7 +18,9 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	private courseServiceSubscription: Subscription;
 	private deleteId: number;
 
-	constructor(private courseService: CourseService, private loaderService: LoaderService) {
+	constructor(private courseService: CourseService,
+		private loaderService: LoaderService,
+		private changeDetectorRef: ChangeDetectorRef) {
 		this.currDate = new Date();
 		this.courses = [];
 	}
@@ -33,8 +29,12 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		console.log('Home page init');
 		this.loaderService.show();
 		this.courseServiceSubscription = this.courseService.getList().subscribe((res: Course[]) => {
-			this.courses = res;
-			setTimeout(() => {this.loaderService.hide()}, 5000);
+			setTimeout(() => {
+				this.courses = res;
+
+				this.loaderService.hide();
+				this.changeDetectorRef.markForCheck();
+			}, 5000);
 		});
 	}
 
@@ -44,12 +44,19 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	}
 
 	private handleDelete(dialog: any) {
-		this.courseService.delete(this.deleteId);
-		this.courseService.getList().subscribe((res: Course[]) => {
-			this.courses = res;
-		});
-		this.deleteId = 0;
 		dialog.close();
+
+		this.loaderService.show();
+		setTimeout(() => {
+			this.courseService.delete(this.deleteId);
+			this.courseService.getList().subscribe((res: Course[]) => {
+				this.courses = res;
+			});
+			this.deleteId = 0;			
+
+			this.loaderService.hide();
+			this.changeDetectorRef.markForCheck();
+		}, 5000);
 	}
 
 	private close(dialog: any) {

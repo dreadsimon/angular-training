@@ -12,7 +12,6 @@ export class LoaderComponent {
     private loaderServiceSubscription: Subscription;
 
 	constructor(private loaderService: LoaderService) {
-        this.show = false;
 	}
 
 	public ngOnInit() {
@@ -21,5 +20,4 @@ export class LoaderComponent {
             console.log('loaderServiceSubscription', this.show);
         });
 	}
-
 }

@@ -33,12 +33,12 @@ export class AppComponent implements OnInit {
 	}
 
 	public ngOnInit() {
-		// this.ngZoneSubscription = this.ngZone.onUnstable.subscribe((res: any) => {
-		// 	console.log('ngZone on Unstable', +new Date);
-		// });
-		// this.ngZoneSubscription = this.ngZone.onStable.subscribe((res: any) => {
-		// 	console.log('ngZone onStable', +new Date);
-		// });
+		this.ngZoneSubscription = this.ngZone.onUnstable.subscribe((res: any) => {
+			console.time('ngZone onStable');
+		});
+		this.ngZoneSubscription = this.ngZone.onStable.subscribe((res: any) => {
+			console.timeEnd('ngZone onStable');
+		});
 	}
 
 }

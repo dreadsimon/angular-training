@@ -1,30 +1,17 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable, EventEmitter } from '@angular/core';
 
 @Injectable()
 export class LoaderService {
-    public visibility: Observable<Boolean>;
+    public visibility = new EventEmitter<boolean>();
 
     constructor() {
-        this.visibility = new Observable(observer => {
-            observer.next(false);
-            observer.complete();
-        });
     }
 
     public show() {
-        console.log('show loader');
-        this.visibility = new Observable(observer => {
-            observer.next(true);
-            observer.complete();
-        });
+        this.visibility.emit(true);
     }
 
     public hide() {
-        console.log('hide loader');
-        this.visibility = new Observable(observer => {
-            observer.next(false);
-            observer.complete();
-        });
+         this.visibility.emit(false);
     }
 }
