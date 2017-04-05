@@ -4,6 +4,7 @@ import { Course } from '../../entities';
 import { CourseService } from '../../services';
 import { LoaderService } from '../../services';
 import { Md2Dialog } from 'md2';
+import { SearchPipe } from './../../pipes';
 
 @Component({
 	selector: 'courses',
@@ -20,7 +21,9 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 	constructor(private courseService: CourseService,
 		private loaderService: LoaderService,
-		private changeDetectorRef: ChangeDetectorRef) {
+		private changeDetectorRef: ChangeDetectorRef,
+		private searchPipe: SearchPipe
+	) {
 		this.currDate = new Date();
 		this.courses = [];
 	}
@@ -34,7 +37,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 				this.loaderService.hide();
 				this.changeDetectorRef.markForCheck();
-			}, 5000);
+			}, 1000);
 		});
 	}
 
@@ -52,11 +55,16 @@ export class CoursesComponent implements OnInit, OnDestroy {
 			this.courseService.getList().subscribe((res: Course[]) => {
 				this.courses = res;
 			});
-			this.deleteId = 0;			
+			this.deleteId = 0;
 
 			this.loaderService.hide();
 			this.changeDetectorRef.markForCheck();
 		}, 5000);
+	}
+
+	private handleSearch(phrase: string) {
+		console.log(phrase);
+		this.courses = this.searchPipe.transform(this.courses, phrase);
 	}
 
 	private close(dialog: any) {

@@ -9,13 +9,19 @@
 	<h4>Courses</h4>
 	<div class="utils row">
 		<div class="col-sm-6">
-			<searchbox></searchbox>
+			<searchbox (onSearch)="handleSearch($event)"></searchbox>
 		</div>
 		<div class="col-sm-6">
 			<button type="button" class="btn btn-success pull-right">Add course</button>
 		</div>
 	</div>
 	<div class="courses">
-		 <course *ngFor="let item of courses" [course]="item" (onDelete)="handleCourseId($event, confirm)"></course>
+		<div *ngIf="courses.length">
+			<course *ngFor="let item of courses | orderBy" [course]="item" (onDelete)="handleCourseId($event, confirm)" ></course>
+		</div>
+		<div *ngIf="!courses.length">
+			<div>No courses available.</div>
+		</div>
+
 	</div>
 </div>

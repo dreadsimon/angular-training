@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 
 @Component({
 	selector: 'searchbox',
@@ -8,12 +8,13 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 })
 export class SearchboxComponent {
 	private searchText: string;
+	@Output() public onSearch = new EventEmitter<string>();
 
 	constructor() {
 		this.searchText = '';
 	}
 
 	private handleSearch() {
-	    console.log('find', this.searchText);
+		this.onSearch.emit(this.searchText);
   	}
 }

@@ -2,9 +2,19 @@
 
 .course {
     &.row {
-        border: 1px solid $c-primary;
-        background: $c-light;
+        border: 1px solid $c-humming-bird;
+        //background: $c-light;
         margin: 0 0 20px;
         padding: 15px;
     }
+}
+
+.rate-star {
+    font-size: 20px;
+    float: right;
+    color: orange;
+}
+
+.top-rated {
+    background-color: #fff7dd;
 }

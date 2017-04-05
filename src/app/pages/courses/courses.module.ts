@@ -11,13 +11,21 @@ import { CoursesComponent } from './courses.component';
 import { CourseComponent } from './course/course.component';
 import { SearchboxModule } from '../../components';
 import { Md2Module }  from 'md2';
-
+import { FreshDirective } from './../../directives/fresh.directive';
 import { CourseService } from './../../services/course.service';
+
+// custom pipes
+import { DurationPipe } from './../../pipes';
+import { OrderByPipe } from './../../pipes';
+import { SearchPipe } from './../../pipes';
 
 @NgModule({
 	declarations: [
 		CoursesComponent,
-		CourseComponent
+		CourseComponent,
+		FreshDirective,
+		DurationPipe,
+		OrderByPipe
 	],
 	imports: [
 		routes,
@@ -27,7 +35,7 @@ import { CourseService } from './../../services/course.service';
 		SearchboxModule,
         Md2Module.forRoot()
 	],
-	providers: [CourseService]
+	providers: [CourseService,SearchPipe]
 })
 export class CoursesModule {
 	constructor() {

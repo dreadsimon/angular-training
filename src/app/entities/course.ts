@@ -4,6 +4,7 @@ interface CourseItem {
 	description: string;
 	date: Date;
 	duration: number;
+	topRated: boolean;
 }
 
 export class Course implements CourseItem {
@@ -12,7 +13,8 @@ export class Course implements CourseItem {
 	public description: string;
 	public date: Date;
 	public duration: number;
+	public topRated: boolean;
 
-	constructor(id: number, title: string, description: string, date: Date, duration: number) {
+	constructor(id: number, title: string, description: string, date: Date, duration: number, topRated: boolean) {
 	}
 }
