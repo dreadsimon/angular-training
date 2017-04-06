@@ -15,6 +15,7 @@ import { SearchPipe } from './../../pipes';
 
 export class CoursesComponent implements OnInit, OnDestroy {
 	private courses: Course[];
+	private coursesAll: Course[];
 	private currDate: Date;
 	private courseServiceSubscription: Subscription;
 	private deleteId: number;
@@ -26,6 +27,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	) {
 		this.currDate = new Date();
 		this.courses = [];
+		this.coursesAll = [];
 	}
 
 	public ngOnInit() {
@@ -34,6 +36,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		this.courseServiceSubscription = this.courseService.getList().subscribe((res: Course[]) => {
 			setTimeout(() => {
 				this.courses = res;
+				this.coursesAll = this.courses.slice(0);
 
 				this.loaderService.hide();
 				this.changeDetectorRef.markForCheck();
@@ -64,7 +67,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 	private handleSearch(phrase: string) {
 		console.log(phrase);
-		this.courses = this.searchPipe.transform(this.courses, phrase);
+		this.courses = this.searchPipe.transform(this.coursesAll, phrase);
 	}
 
 	private close(dialog: any) {

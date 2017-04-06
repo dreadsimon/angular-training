@@ -8,8 +8,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class SearchPipe implements PipeTransform {
 
 	transform(array: any[], title: string) {
+		if (!array.length || title === '') {
+			return array;
+		}
 		return array.filter((item) => {
-			return item.title.toLowerCase() === title.toLowerCase();
+			return item.title.toLowerCase().search(title.toLowerCase()) > 0;
 		});
 	}
 }
