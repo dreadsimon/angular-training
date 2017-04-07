@@ -8,9 +8,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class OrderByPipe implements PipeTransform {
 
 	transform(array) {
-		array.sort((a, b) => {
-			new Date(a.date).getTime() - new Date(b.date).getTime()
-		});
+		array.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 		return array;
 	}
 }
