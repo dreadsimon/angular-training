@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 	}
 
 	private handleLogin() {
-		this.loaderService.show();
+		if (!!this.credentials.login && !!this.credentials.password) {this.loaderService.show()};
 		this.authService.login(this.credentials.login, this.credentials.password);
 	}
 	public ngOnInit() {

@@ -18,7 +18,7 @@ export class CourseService {
        }
 
        (<any[]>coursesJSON).forEach(a => {
-           this.courses.push(Object.assign(new Course(null, null, null, null, null), a));
+           this.courses.push(Object.assign(new Course(null, null, null, null, null, null), a));
        });
    }
 
