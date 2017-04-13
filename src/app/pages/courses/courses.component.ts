@@ -31,7 +31,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	}
 
 	public ngOnInit() {
-		console.log('Home page init');
 		this.loaderService.show();
 		this.courseServiceSubscription = this.courseService.getList().subscribe((res: Course[]) => {
 			setTimeout(() => {

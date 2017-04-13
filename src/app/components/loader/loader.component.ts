@@ -17,7 +17,6 @@ export class LoaderComponent {
 	public ngOnInit() {
         this.loaderServiceSubscription = this.loaderService.visibility.subscribe((res: boolean) => {
             this.show = res;
-            console.log('loaderServiceSubscription', this.show);
         });
 	}
 }

@@ -6,7 +6,8 @@ import coursesJSON from '../data/courses';
 
 @Injectable()
 export class CourseService {
-    courses: Course[];
+    private courses: Course[];
+    private course: Course;
 
     constructor() {
          this.fillCourses();
@@ -20,6 +21,11 @@ export class CourseService {
        (<any[]>coursesJSON).forEach(a => {
            this.courses.push(Object.assign(new Course(null, null, null, null, null, null), a));
        });
+
+       //last 2 weeks only
+       this.courses = this.courses.filter(item => {
+           return new Date(item.date) > new Date(+new Date - 12096e5);
+       });
    }
 
     public getList (): Observable<Course[]> {
@@ -27,7 +33,9 @@ export class CourseService {
     }
 
     public getOne (id: number) {
-        return this.courses.filter((course) => course.id === id);
+        this.course = this.courses.find((course) => course.id === id);
+        console.log(this.course)
+        return Observable.of<Course>(this.course);
     }
 
     public add (course: Course) {

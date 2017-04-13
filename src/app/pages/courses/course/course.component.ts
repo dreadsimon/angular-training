@@ -1,11 +1,10 @@
-import { Component, ViewEncapsulation, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { Course } from '../../../entities';
 
 @Component({
 	selector: 'course',
 	templateUrl: 'course.component.html',
-	styleUrls: ['./course.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+	styleUrls: ['./course.component.scss']
 })
 export class CourseComponent {
 	@Input() public course: Course;
