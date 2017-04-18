@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { User } from '../entities';
 import { Router, RouterModule } from '@angular/router';
 
@@ -7,7 +7,7 @@ import { Router, RouterModule } from '@angular/router';
 export class AuthService {
     private user: User;
     private token: string;
-
+    public auth: ReplaySubject<any>;
     constructor(private router: Router) {
         this.user = new User(1, 'Szymon', 'Banas', 'simon', 'test', true);
         this.token = Math.random().toString(36);
@@ -18,6 +18,7 @@ export class AuthService {
             console.log('logged in: ', login);
             localStorage.setItem('login', login);
             localStorage.setItem('token', this.token);
+            this.auth.next('login');
 
             this.router.navigate(['courses']);
         }
@@ -26,18 +27,21 @@ export class AuthService {
     public logout() {
         localStorage.removeItem('login');
         localStorage.removeItem('token');
-
+        this.auth.next('logout');
         this.router.navigate(['login']);
     }
 
     public isAuthenticated() {
         if (localStorage.getItem('token') == this.token) {
+            this.auth.next(true);
             return true;
         };
+        this.auth.next(false);
         return false;
     }
 
     public getUserInfo(): Observable<String> {
+        this.auth.next(localStorage.getItem('login'));
         return Observable.of<String>(localStorage.getItem('login'));
     }
 }
