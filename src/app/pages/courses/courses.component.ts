@@ -14,6 +14,7 @@ import { SearchPipe } from './../../pipes';
 })
 
 export class CoursesComponent implements OnInit, OnDestroy {
+	private course: Course;
 	private courses: Course[];
 	private coursesAll: Course[];
 	private currDate: Date;
@@ -28,6 +29,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		this.currDate = new Date();
 		this.courses = [];
 		this.coursesAll = [];
+		this.course = new Course(null, null, null, null, null, null);
 	}
 
 	public ngOnInit() {
@@ -43,8 +45,25 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	private handleCourseId(id, dialog: Md2Dialog) {
+	private handleDeleteId(id, dialog: Md2Dialog) {
 		this.deleteId = id;
+		dialog.open();
+	}
+
+	private handleEditId(id, dialog: Md2Dialog) {
+		this.loaderService.show();
+		this.courseServiceSubscription = this.courseService.getOne(id).subscribe((res: Course) => {
+			setTimeout(() => {
+				this.course = Object.assign({}, res);
+
+				this.loaderService.hide();
+				this.changeDetectorRef.markForCheck();
+			}, 1000);
+		});
+		dialog.open();
+	}
+
+	private handleNew(dialog: Md2Dialog) {
 		dialog.open();
 	}
 
@@ -64,6 +83,22 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		}, 5000);
 	}
 
+	private handleSave(dialog: any) {
+		dialog.close();
+
+		this.loaderService.show();
+		setTimeout(() => {
+			this.courseService.update(this.course);
+			this.courseService.getList().subscribe((res: Course[]) => {
+				this.courses = res;
+			});
+			this.course = new Course(null, null, null, null, null, null);
+
+			this.loaderService.hide();
+			this.changeDetectorRef.markForCheck();
+		}, 5000);
+	}
+
 	private handleSearch(phrase: string) {
 		console.log(phrase);
 		this.courses = this.searchPipe.transform(this.coursesAll, phrase);
@@ -71,6 +106,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 	private close(dialog: any) {
 		dialog.close();
+		this.course = new Course(null, null, null, null, null, null);
+		this.deleteId = 0;
 	}
 
 	public ngOnDestroy() {

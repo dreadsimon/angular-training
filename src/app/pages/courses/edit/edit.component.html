@@ -1,0 +1,27 @@
+<form class="form-horizontal">
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="title">Title</label>
+	    <div class="col-sm-10">
+	      <input type="text" class="form-control" id="title" name="title" [(ngModel)]="course.title">
+	    </div>
+		 </div>
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="description">Description</label>
+	    <div class="col-sm-10">
+	      <textarea class="form-control" id="description" name="description" rows="10" cols="300" [(ngModel)]="course.description"></textarea>
+	    </div>
+		 </div>
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="date">Date</label>
+	    <div class="col-sm-10">
+	      <input type="text" class="form-control" id="date" name="date" [(ngModel)]="course.date">
+	    </div>
+		 </div>
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="duration">Duration</label>
+	    <div class="col-sm-10">
+	      <input type="text" class="form-control" id="duration" name="duration" [(ngModel)]="course.duration">
+		  <span></span>
+	    </div>
+	 </div>
+</form>

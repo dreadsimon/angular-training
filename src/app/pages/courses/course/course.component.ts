@@ -9,12 +9,16 @@ import { Course } from '../../../entities';
 export class CourseComponent {
 	@Input() public course: Course;
 	@Output() public onDelete = new EventEmitter<number>();
+	@Output() public onEdit = new EventEmitter<number>();
 
 	constructor() {
 	}
 
 	private handleDelete() {
 		this.onDelete.emit(this.course.id);
-		console.log('delete clicked');
+	}
+
+	private handleEdit() {
+		this.onEdit.emit(this.course.id);
 	}
 }

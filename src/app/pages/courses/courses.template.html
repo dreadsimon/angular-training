@@ -5,6 +5,14 @@
         <button type="button" class="btn" (click)="close(confirm)">Cancel</button>
   	</md2-dialog-footer>
 </md2-dialog>
+<md2-dialog #edit>
+	<md2-dialog-title>Edit/Add course</md2-dialog-title>
+	<edit [course]="course"></edit>
+	<md2-dialog-footer>
+        <button type="button" class="btn btn-success" (click)="handleSave(edit)">Ok</button>
+        <button type="button" class="btn" (click)="close(edit)">Cancel</button>
+  	</md2-dialog-footer>
+</md2-dialog>
 <div class="courses-page page">
 	<h4>Courses</h4>
 	<div class="utils row">
@@ -12,12 +20,12 @@
 			<searchbox (onSearch)="handleSearch($event)"></searchbox>
 		</div>
 		<div class="col-sm-6">
-			<button type="button" class="btn btn-success pull-right" [routerLink]="'/edit'">Add course</button>
+			<button type="button" class="btn btn-success pull-right" (click)="handleNew(edit)">Add course</button>
 		</div>
 	</div>
 	<div class="courses">
 		<div *ngIf="courses.length">
-			<course *ngFor="let item of courses | orderBy" [course]="item" (onDelete)="handleCourseId($event, confirm)" ></course>
+			<course *ngFor="let item of courses | orderBy" [course]="item" (onDelete)="handleDeleteId($event, confirm)" (onEdit)="handleEditId($event, edit)"></course>
 		</div>
 		<div *ngIf="!courses.length">
 			<div>No courses available.</div>

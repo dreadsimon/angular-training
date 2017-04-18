@@ -28,7 +28,6 @@ import { HeaderModule, FooterModule, LogoModule, LoaderModule } from './componen
 
 // Pages
 import { CoursesModule } from './pages/courses';
-import { EditCourseModule } from './pages/editcourse';
 import { LoginModule } from './pages/login';
 
 // Services
@@ -61,7 +60,6 @@ const APP_PROVIDERS = [
 		FooterModule,
 		LogoModule,
 		CoursesModule,
-		EditCourseModule,
 		LoginModule,
 		LoaderModule
 	],

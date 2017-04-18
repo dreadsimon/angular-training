@@ -34,15 +34,32 @@ export class CourseService {
 
     public getOne (id: number) {
         this.course = this.courses.find((course) => course.id === id);
-        console.log(this.course)
         return Observable.of<Course>(this.course);
     }
 
     public add (course: Course) {
         this.courses.push(course);
+        return true;
+    }
+
+    public update (course: Course) {
+        let pos;
+        if (!!course.id) {
+            this.courses.forEach(item => {
+                if (course.id === item.id) {
+                    pos = this.courses.indexOf(item);
+                }
+            });
+            this.courses[pos] = Object.assign({}, this.courses[pos], course);
+        } else {
+            course.id = Math.floor((Math.random() * 100) + 1);
+            this.add(course);
+        }
+        return true;
     }
 
     public delete (id: number) {
         this.courses = this.courses.filter((course) => course.id !== id);
+        return true;
     }
 }

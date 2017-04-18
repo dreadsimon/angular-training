@@ -9,6 +9,7 @@ import { routes } from './courses.routes';
 // custom components
 import { CoursesComponent } from './courses.component';
 import { CourseComponent } from './course/course.component';
+import { EditCourseComponent } from './edit/edit.component';
 import { SearchboxModule } from '../../components';
 import { Md2Module }  from 'md2';
 import { FreshDirective } from './../../directives/fresh.directive';
@@ -23,6 +24,7 @@ import { SearchPipe } from './../../pipes';
 	declarations: [
 		CoursesComponent,
 		CourseComponent,
+		EditCourseComponent,
 		FreshDirective,
 		DurationPipe,
 		OrderByPipe
