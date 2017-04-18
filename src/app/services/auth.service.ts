@@ -11,6 +11,7 @@ export class AuthService {
     constructor(private router: Router) {
         this.user = new User(1, 'Szymon', 'Banas', 'simon', 'test', true);
         this.token = Math.random().toString(36);
+        this.auth = new ReplaySubject;
     }
 
     public login(login: string, password: string) {

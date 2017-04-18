@@ -21,6 +21,7 @@
 		<label class="control-label col-sm-2" for="duration">Duration</label>
 	    <div class="col-sm-10">
 	      <input type="text" class="form-control" id="duration" name="duration" [(ngModel)]="course.duration">
+		  {{course.duration | duration}}
 		  <span></span>
 	    </div>
 	 </div>

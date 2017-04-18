@@ -29,6 +29,18 @@ export class LoginComponent implements OnInit, OnDestroy {
 	private handleLogin() {
 		if (!!this.credentials.login && !!this.credentials.password) {this.loaderService.show()};
 		this.authService.login(this.credentials.login, this.credentials.password);
+		this.authService.auth.subscribe(
+			val => {
+				console.log('auth replay subject', val);
+			},
+			err => {
+				console.log('error', err)
+			},
+			() => {
+				console.log('completed');
+			}
+		);
+		
 	}
 	public ngOnInit() {
 		console.log('Home page init');
