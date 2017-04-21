@@ -19,42 +19,28 @@ export class AuthService {
     }
 
     public login(login: string, password: string) {
-        return this.http.get(this.url+'/users')
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return this.http.post(this.url+'/auth/login', {"login": login, "password": password}, options)
             .map(res => {
-                return res.json().map(user => new User(
-                    user.id,
-                    user.name.first,
-                    user.name.last,
-                    user.login,
-                    user.password,
-                    user.fakeToken,
-                    true
-                ));
-            })
-            .subscribe(res => {
-                res.forEach(user => {
-                    if (login === user.login && password === user.password) {
-                        console.log('logged in: ', login);
-                        localStorage.setItem('login', login);
-                        localStorage.setItem('token', user.token);
-                        this.auth.next('login');
+                let token = res.json().token;
+                localStorage.setItem('token', token);
+                this.auth.next('login');
 
-                        this.router.navigate(['courses']);
-                    }
-                })
+                console.log('logged in: ', login);
+                this.router.navigate(['courses']);
             });
 
     }
 
     public logout() {
-        localStorage.removeItem('login');
         localStorage.removeItem('token');
         this.auth.next('logout');
         this.router.navigate(['login']);
     }
 
     public isAuthenticated() {
-        if (localStorage.getItem('token') == this.token) {
+        if (!!localStorage.getItem('token')) {
             this.auth.next(true);
             return true;
         };
@@ -62,8 +48,26 @@ export class AuthService {
         return false;
     }
 
-    public getUserInfo(): Observable<String> {
-        this.auth.next(localStorage.getItem('login'));
-        return Observable.of<String>(localStorage.getItem('login'));
+    public getUserInfo() {
+        const token =  localStorage.getItem('token');
+        console.log(token);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        headers.set('Authorization', token);
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(this.url+'/auth/userinfo', {}, options)
+            .map(res => {
+                const user = res.json();
+                console.log('response', user);
+                return new User(
+                    user.id,
+                    user.name.first,
+                    user.name.last,
+                    user.login,
+                    user.password,
+                    user.fakeToken,
+                    true
+                );
+            });
     }
 }

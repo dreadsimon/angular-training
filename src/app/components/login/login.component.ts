@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './../../services/auth.service';
 import { Subscription } from 'rxjs';
+import { User } from '../entities';
 
 @Component({
 	selector: 'login',
@@ -15,8 +16,9 @@ export class LoginComponent {
 	}
 
 	public ngOnInit() {
-		this.authServiceSubscription = this.authService.getUserInfo().subscribe((res: string) => {
-			this.login = res;
+		this.authServiceSubscription = this.authService.getUserInfo().subscribe((res) => {
+			console.log(res);
+			this.login = res.login;
 		});
 	}
 
