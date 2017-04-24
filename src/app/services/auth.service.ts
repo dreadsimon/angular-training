@@ -13,7 +13,6 @@ export class AuthService {
     public auth: ReplaySubject<any>;
     constructor(private router: Router, private http: Http) {
         this.user = new User(0, null, null, null, null, null, true);
-        this.token = Math.random().toString(36);
         this.auth = new ReplaySubject(25, 1000);
         this.url = apiUrl;
     }

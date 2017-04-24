@@ -9,8 +9,7 @@ import { SearchPipe } from './../../pipes';
 @Component({
 	selector: 'courses',
 	styleUrls: ['./courses.styles.scss'],
-	templateUrl: './courses.template.html',
-	changeDetection: ChangeDetectionStrategy.OnPush
+	templateUrl: './courses.template.html'
 })
 
 export class CoursesComponent implements OnInit, OnDestroy {
@@ -40,7 +39,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
 				this.coursesAll = this.courses.slice(0);
 
 				this.loaderService.hide();
-				this.changeDetectorRef.markForCheck();
 			}, 1000);
 		});
 	}
@@ -57,7 +55,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
 				this.course = Object.assign({}, res);
 
 				this.loaderService.hide();
-				this.changeDetectorRef.markForCheck();
 			}, 1000);
 		});
 		dialog.open();
@@ -72,14 +69,17 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 		this.loaderService.show();
 		setTimeout(() => {
-			this.courseService.delete(this.deleteId);
+			this.courseService.delete(this.deleteId).subscribe(res => {
+				console.log(res);
+			}, err => {
+				console.error(err);
+			});
 			this.courseService.getList().subscribe((res: Course[]) => {
 				this.courses = res;
 			});
 			this.deleteId = 0;
 
 			this.loaderService.hide();
-			this.changeDetectorRef.markForCheck();
 		}, 5000);
 	}
 
@@ -88,14 +88,17 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 		this.loaderService.show();
 		setTimeout(() => {
-			this.courseService.update(this.course);
+			this.courseService.update(this.course).subscribe(res => {
+				console.log(res);
+			}, err => {
+				console.error(err);
+			});
 			this.courseService.getList().subscribe((res: Course[]) => {
 				this.courses = res;
 			});
 			this.course = new Course(null, null, null, null, null, null);
 
 			this.loaderService.hide();
-			this.changeDetectorRef.markForCheck();
 		}, 5000);
 	}
 

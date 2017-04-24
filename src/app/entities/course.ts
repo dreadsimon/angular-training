@@ -16,5 +16,11 @@ export class Course implements CourseItem {
 	public topRated: boolean;
 
 	constructor(id: number, title: string, description: string, date: Date, duration: number, topRated: boolean) {
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.date = date;
+		this.duration = duration;
+		this.topRated = topRated;		
 	}
 }
