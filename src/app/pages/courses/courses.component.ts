@@ -104,7 +104,9 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 	private handleSearch(phrase: string) {
 		console.log(phrase);
-		this.courses = this.searchPipe.transform(this.coursesAll, phrase);
+		this.courseService.getList(phrase).subscribe((res: Course[]) => {
+			this.courses = res;
+		});
 	}
 
 	private close(dialog: any) {

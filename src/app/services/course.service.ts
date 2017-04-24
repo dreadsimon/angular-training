@@ -17,24 +17,20 @@ export class CourseService {
         this.course = new Course(null, null, null, null, null, null);
     }
 
-    private fillCourses() {
-       if (!this.courses) {
-           this.courses = [];
-       }
-
-    //    (<any[]>coursesJSON).forEach(a => {
-    //        this.courses.push(Object.assign(new Course(null, null, null, null, null, null), a));
-    //    });
-
        //last 2 weeks only
     //    this.courses = this.courses.filter(item => {
     //        return new Date(item.date) > new Date(+new Date - 12096e5);
     //    });
-   }
 
-    public getList () {
+    public getList (query?: string) {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
+        if (!!query) {
+            let params: URLSearchParams = new URLSearchParams();
+            params.set('q', query);
+            options.search = params;
+        }
+
         return this.http.get(this.url+'/courses', options)
             .map(res => {
                 const courses = res.json();
