@@ -16,7 +16,10 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	private course: Course;
 	private courses: Course[];
 	private coursesAll: Course[];
+	private current: number;
+	private pages: number;
 	private currDate: Date;
+	private fakeArray: Array<any>;
 	private courseServiceSubscription: Subscription;
 	private deleteId: number;
 
@@ -27,15 +30,21 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	) {
 		this.currDate = new Date();
 		this.courses = [];
+		this.current = 0;
+		this.pages = 0;
+		this.fakeArray = [];
 		this.coursesAll = [];
 		this.course = new Course(null, null, null, null, null, null);
 	}
 
 	public ngOnInit() {
 		this.loaderService.show();
-		this.courseServiceSubscription = this.courseService.getList().subscribe((res: Course[]) => {
+		this.courseServiceSubscription = this.courseService.getList().subscribe((res) => {
 			setTimeout(() => {
-				this.courses = res;
+				this.courses = res.courses;
+				this.pages = parseInt(res.pages);
+				this.fakeArray = new Array(this.pages);
+				this.current = parseInt(res.current);
 				this.coursesAll = this.courses.slice(0);
 
 				this.loaderService.hide();
@@ -74,8 +83,12 @@ export class CoursesComponent implements OnInit, OnDestroy {
 			}, err => {
 				console.error(err);
 			});
-			this.courseService.getList().subscribe((res: Course[]) => {
-				this.courses = res;
+			this.courseService.getList().subscribe((res) => {
+				this.courses = res.courses;
+				this.pages = parseInt(res.pages);
+				this.fakeArray = new Array(this.pages);
+				this.current = parseInt(res.current);
+				this.coursesAll = this.courses.slice(0);
 			});
 			this.deleteId = 0;
 
@@ -93,8 +106,12 @@ export class CoursesComponent implements OnInit, OnDestroy {
 			}, err => {
 				console.error(err);
 			});
-			this.courseService.getList().subscribe((res: Course[]) => {
-				this.courses = res;
+			this.courseService.getList().subscribe((res) => {
+				this.courses = res.courses;
+				this.pages = parseInt(res.pages);
+				this.fakeArray = new Array(this.pages);
+				this.current = parseInt(res.current);
+				this.coursesAll = this.courses.slice(0);
 			});
 			this.course = new Course(null, null, null, null, null, null);
 
@@ -104,8 +121,20 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 	private handleSearch(phrase: string) {
 		console.log(phrase);
-		this.courseService.getList(phrase).subscribe((res: Course[]) => {
-			this.courses = res;
+		this.courseService.getList(phrase).subscribe((res) => {
+			this.courses = res.courses;
+			this.pages = parseInt(res.pages);
+			this.fakeArray = new Array(this.pages);
+			this.current = parseInt(res.current);
+		});
+	}
+
+	private changePagination(i: number) {
+		this.courseService.getList('', i, 10).subscribe((res) => {
+			this.courses = res.courses;
+			this.pages = parseInt(res.pages);
+			this.fakeArray = new Array(this.pages);
+			this.current = parseInt(res.current);
 		});
 	}
 

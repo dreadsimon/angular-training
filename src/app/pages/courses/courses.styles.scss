@@ -1,1 +1,19 @@
 ﻿@import "../../styles/variables/colors.scss";
+.pagination{
+    margin: 20px 0;
+    padding: 0;
+    list-style: none;
+    li{
+        display: inline-block;
+        margin: 0 1em;
+        a{
+            cursor: pointer;
+            background: $c-light;
+            padding: 0.5em;
+            &.active{
+                color: white;
+                background: $c-primary;
+            }
+        }
+    }
+}
