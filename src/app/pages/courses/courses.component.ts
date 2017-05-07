@@ -30,8 +30,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	) {
 		this.currDate = new Date();
 		this.courses = [];
-		this.current = 0;
-		this.pages = 0;
+		this.current = 1;
+		this.pages = 1;
 		this.fakeArray = [];
 		this.coursesAll = [];
 		this.course = new Course(null, null, null, null, null, null);
@@ -39,7 +39,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 	public ngOnInit() {
 		this.loaderService.show();
-		this.courseServiceSubscription = this.courseService.getList().subscribe((res) => {
+		// get first portion of courses
+		this.courseServiceSubscription = this.courseService.getList('', this.current, 10).subscribe((res) => {
 			setTimeout(() => {
 				this.courses = res.courses;
 				this.pages = parseInt(res.pages);
@@ -83,7 +84,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 			}, err => {
 				console.error(err);
 			});
-			this.courseService.getList().subscribe((res) => {
+			this.courseService.getList('', this.current, 10).subscribe((res) => {
 				this.courses = res.courses;
 				this.pages = parseInt(res.pages);
 				this.fakeArray = new Array(this.pages);
@@ -106,7 +107,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 			}, err => {
 				console.error(err);
 			});
-			this.courseService.getList().subscribe((res) => {
+			this.courseService.getList('', this.current, 10).subscribe((res) => {
 				this.courses = res.courses;
 				this.pages = parseInt(res.pages);
 				this.fakeArray = new Array(this.pages);
@@ -121,7 +122,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 	private handleSearch(phrase: string) {
 		console.log(phrase);
-		this.courseService.getList(phrase).subscribe((res) => {
+		this.courseService.getList(phrase, this.current, 10).subscribe((res) => {
 			this.courses = res.courses;
 			this.pages = parseInt(res.pages);
 			this.fakeArray = new Array(this.pages);

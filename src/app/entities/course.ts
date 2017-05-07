@@ -21,6 +21,6 @@ export class Course implements CourseItem {
 		this.description = description;
 		this.date = date;
 		this.duration = duration;
-		this.topRated = topRated;		
+		this.topRated = topRated;
 	}
 }

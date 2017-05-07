@@ -30,9 +30,9 @@ export class CourseService {
         return this.http.get(this.url + '/courses', options)
             .map(res => {
                 const data = res.json();
-                const courses = data.courses;
+                let courses = data.courses;
 
-                courses.map(course => {
+                courses = courses.map(course => {
                     return new Course(
                         course.id,
                         course.name,
