@@ -12,7 +12,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 	template: `
 		<input [(ngModel)]="value"
 				class="form-control input-date"
-				(blur)="onBlur()" validateDate>
+				(blur)="onBlur()">
 	`,
 	styleUrls: ['./inputdate.component.scss'],
 	providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]

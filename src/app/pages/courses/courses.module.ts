@@ -11,7 +11,7 @@ import { CoursesComponent } from './courses.component';
 import { CourseComponent } from './course/course.component';
 import { EditCourseComponent } from './edit/edit.component';
 import { SearchboxModule } from '../../components';
-import { InputDateModule } from '../../components';
+import { InputDateComponent } from '../../controls/inputdate/inputdate.component';
 import { Md2Module }  from 'md2';
 import { FreshDirective } from './../../directives/fresh.directive';
 import { CourseService } from './../../services/course.service';
@@ -21,6 +21,9 @@ import { DurationPipe } from './../../pipes';
 import { OrderByPipe } from './../../pipes';
 import { SearchPipe } from './../../pipes';
 
+// Custom Validators
+import { DateValidator } from './../../validators/date.validator.directive'
+
 @NgModule({
 	declarations: [
 		CoursesComponent,
@@ -28,7 +31,9 @@ import { SearchPipe } from './../../pipes';
 		EditCourseComponent,
 		FreshDirective,
 		DurationPipe,
-		OrderByPipe
+		OrderByPipe,
+		InputDateComponent,
+		DateValidator
 	],
 	imports: [
 		routes,
@@ -36,7 +41,6 @@ import { SearchPipe } from './../../pipes';
 		ReactiveFormsModule,
 		CommonModule,
 		SearchboxModule,
-		InputDateModule,
         Md2Module.forRoot()
 	],
 	providers: [CourseService,SearchPipe]
