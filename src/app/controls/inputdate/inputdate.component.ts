@@ -1,10 +1,17 @@
 import { Component, forwardRef  } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, Validator, ControlValueAccessor,ValidationErrors } from '@angular/forms';
 
-export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
+const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => InputDateComponent),
     multi: true
+};
+
+const CUSTOM_INPUT_CONTROL_VALIDATOR = {
+  provide: NG_VALIDATORS,
+  // tslint:disable-next-line:no-forward-ref
+  useExisting: forwardRef(() => InputDateComponent),
+  multi: true,
 };
 
 @Component({
@@ -15,12 +22,20 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 				(blur)="onBlur()">
 	`,
 	styleUrls: ['./inputdate.component.scss'],
-	providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+	providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR, CUSTOM_INPUT_CONTROL_VALIDATOR]
 })
-export class InputDateComponent implements ControlValueAccessor {
+export class InputDateComponent implements ControlValueAccessor, Validator {
 	//The internal data model
     private innerValue: any = '';
+    public acceptedFormat = 'DD/MM/YYYY';
+    private _validationErrors: ValidationErrors;
+    private _onChange: Function;
+    private _onTouched: Function;
+    private _onValidatorChange: Function;
 
+    public validate(c: FormControl): ValidationErrors {
+      return this._validationErrors;
+    }
 
 	//get accessor
     get value(): any {
