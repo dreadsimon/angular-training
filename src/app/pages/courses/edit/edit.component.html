@@ -15,7 +15,7 @@
 	<div class="form-group">
 		<label class="control-label col-sm-2" for="date">Date</label>
 	    <div class="col-sm-10">
-	      <date id="date" name="date" [(ngModel)]="course.date" #date="ngModel" validateDate></date>
+	      <date id="date" name="date" [(ngModel)]="course.date" #date="ngModel"></date>
 		  <span class="status-message error-message" *ngIf="date.invalid && date.dirty">Error</span>
 	    </div>
 		 </div>

@@ -1,5 +1,5 @@
 import { Component, forwardRef  } from '@angular/core';
-import { NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, Validator, ControlValueAccessor,ValidationErrors } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, Validator, ControlValueAccessor } from '@angular/forms';
 
 const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -19,7 +19,7 @@ const CUSTOM_INPUT_CONTROL_VALIDATOR = {
 	template: `
 		<input [(ngModel)]="value"
 				class="form-control input-date"
-				(blur)="onBlur()">
+				(blur)="onBlur()" pattern="[0-9]{2}">
 	`,
 	styleUrls: ['./inputdate.component.scss'],
 	providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR, CUSTOM_INPUT_CONTROL_VALIDATOR]
@@ -28,13 +28,17 @@ export class InputDateComponent implements ControlValueAccessor, Validator {
 	//The internal data model
     private innerValue: any = '';
     public acceptedFormat = 'DD/MM/YYYY';
-    private _validationErrors: ValidationErrors;
     private _onChange: Function;
     private _onTouched: Function;
-    private _onValidatorChange: Function;
+    private _validationErrors: Array<Object>;
+    private parseError: boolean;
 
-    public validate(c: FormControl): ValidationErrors {
-      return this._validationErrors;
+    public validate(c: FormControl) {
+        return c.value instanceof Date ? null : {
+          validateDate: {
+            valid: false
+          }
+        };
     }
 
 	//get accessor
