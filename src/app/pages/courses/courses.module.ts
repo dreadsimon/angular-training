@@ -22,7 +22,6 @@ import { OrderByPipe } from './../../pipes';
 import { SearchPipe } from './../../pipes';
 
 // Custom Validators
-import { DateValidator } from './../../validators/date.validator.directive'
 
 @NgModule({
 	declarations: [
@@ -32,8 +31,7 @@ import { DateValidator } from './../../validators/date.validator.directive'
 		FreshDirective,
 		DurationPipe,
 		OrderByPipe,
-		InputDateComponent,
-		DateValidator
+		InputDateComponent
 	],
 	imports: [
 		routes,

@@ -1,4 +1,4 @@
-import { Component, forwardRef  } from '@angular/core';
+import { Component, forwardRef, Input  } from '@angular/core';
 import { NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, Validator, ControlValueAccessor } from '@angular/forms';
 
 const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
@@ -9,74 +9,62 @@ const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 
 const CUSTOM_INPUT_CONTROL_VALIDATOR = {
   provide: NG_VALIDATORS,
-  // tslint:disable-next-line:no-forward-ref
   useExisting: forwardRef(() => InputDateComponent),
   multi: true,
 };
 
 @Component({
 	selector: 'date',
-	template: `
-		<input [(ngModel)]="value"
-				class="form-control input-date"
-				(blur)="onBlur()" pattern="[0-9]{2}">
-	`,
+	template:
+    `<div>
+    		<input [value]="viewValue"
+                    [placeholder]="acceptedFormat"
+    				class="form-control input-date"
+    				(blur)="onChange($event)">
+            <span class="status-message error-message" *ngIf="control?.errors?.dateFormatError">Invalid format</span>
+    </div>`,
 	styleUrls: ['./inputdate.component.scss'],
 	providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR, CUSTOM_INPUT_CONTROL_VALIDATOR]
 })
 export class InputDateComponent implements ControlValueAccessor, Validator {
-	//The internal data model
-    private innerValue: any = '';
-    public acceptedFormat = 'DD/MM/YYYY';
+     @Input() public control: FormControl;
+    private viewValue: string = '';
+    public modelValue: string;
+    private acceptedFormat: '00/00/0000'
     private _onChange: Function;
     private _onTouched: Function;
-    private _validationErrors: Array<Object>;
-    private parseError: boolean;
+    private propagateChange = (_: any) => { };
+    private dateError: boolean;
 
     public validate(c: FormControl) {
-        return c.value instanceof Date ? null : {
-          validateDate: {
-            valid: false
-          }
-        };
+        let DATE_REGEXP = new RegExp('^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$');
+        console.log('validate', c.value, DATE_REGEXP.test(c.value));
+        return (!this.dateError && DATE_REGEXP.test(c.value)) ? null : { dateFormatError: {valid: false} };
     }
 
-	//get accessor
-    get value(): any {
-        return this.innerValue;
-    };
-
-    //set accessor including call the onchange callback
-    set value(v: any) {
-        if (v !== this.innerValue) {
-            this.innerValue = v;
-            this.onChange(v);
-        }
-    }
-
-	onChange = (_) => {};
     onTouched = () => {};
 
-    //Set touched on blur
-    onBlur() {
-        this.onTouched();
-    }
-
     //From ControlValueAccessor interface
-    writeValue(value: any) {
-        if (value !== this.innerValue) {
-            this.innerValue = value;
+    public writeValue(value: any) {
+        if (value !== this.modelValue) {
+            this.modelValue = value;
+            this.viewValue = value;
         }
     }
 
     //From ControlValueAccessor interface
-    registerOnChange(fn: any) {
-        this.onChange = fn;
+    public registerOnChange(fn: any) {
+        this.propagateChange = fn;
     }
 
     //From ControlValueAccessor interface
-    registerOnTouched(fn: any) {
+    public registerOnTouched(fn: any) {
         this.onTouched = fn;
     }
 
+    private onChange(event) {
+        console.log('onChange', event.target.value);
+        this.modelValue = event.target.value;
+        this.propagateChange(this.modelValue);
+    }
 }
