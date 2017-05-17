@@ -10,7 +10,12 @@ import { Course } from '../../../entities';
 
 export class EditCourseComponent {
 	@Input() public course: Course;
-	@Output() public onDelete = new EventEmitter<number>();
+	@Output() public formValid = new EventEmitter<Boolean>();
 
 	constructor() {}
+
+	private handleChange(valid) {
+		console.log('handleChange', valid);
+		this.formValid.emit(valid);
+	}
 }

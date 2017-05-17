@@ -1,29 +1,38 @@
 <form class="form-horizontal" #editform="ngForm">
-	<div class="form-group">
+	<div class="form-group" [ngClass]="{'has-danger': title.invalid && title.dirty}">
 		<label class="control-label col-sm-2" for="title">Title</label>
 	    <div class="col-sm-10">
-	      <input type="text" class="form-control" id="title" name="title" #title="ngModel" [(ngModel)]="course.title" maxlength="50" required>
-		  <span class="status-message error-message" *ngIf="title.invalid && title.dirty">Error</span>
+	      <input type="text" class="form-control" id="title" name="title" #title="ngModel" [(ngModel)]="course.title" maxlength="50" required (ngModelChange)="handleChange(editform.form.valid)">
+		  <div class="form-control-feedback" *ngIf="title.invalid && title.dirty">Required, maxlength 50 chars </div>
 	    </div>
 		 </div>
-	<div class="form-group">
+	<div class="form-group" [ngClass]="{'has-danger': description.invalid && description.dirty}">
 		<label class="control-label col-sm-2" for="description">Description</label>
 	    <div class="col-sm-10">
-	      <textarea class="form-control" id="description" name="description" rows="10" cols="300" [(ngModel)]="course.description" maxlength="500"></textarea>
+	      <textarea class="form-control" id="description" name="description" rows="10" cols="300" [(ngModel)]="course.description" maxlength="500" required #description="ngModel" (ngModelChange)="handleChange(editform.form.valid)"></textarea>
+		  <div class="form-control-feedback" *ngIf="description.invalid && description.dirty">Required, maxlength 500 chars</div>
 	    </div>
 		 </div>
-	<div class="form-group">
+	<div class="form-group" [ngClass]="{'has-danger': date.invalid && date.dirty}">
 		<label class="control-label col-sm-2" for="date">Date</label>
 	    <div class="col-sm-10">
-	      <date id="date" name="date" [(ngModel)]="course.date" #date="ngModel"></date>
+	      <date id="date" name="date" [(ngModel)]="course.date" #date="ngModel" (ngModelChange)="handleChange(editform.form.valid)"></date>
+		  <div class="form-control-feedback" *ngIf="date.invalid && date.dirty">Invalid date, valid format: DD/MM/YYYY</div>
 	    </div>
 		 </div>
-	<div class="form-group">
+	<div class="form-group" [ngClass]="{'has-danger': duration.invalid && duration.dirty}">
 		<label class="control-label col-sm-2" for="duration">Duration</label>
 	    <div class="col-sm-10">
-	      <input type="number" class="form-control" id="duration" name="duration" [(ngModel)]="course.duration">
+	      <input type="number" class="form-control" id="duration" name="duration" #duration="ngModel" [(ngModel)]="course.duration" required (ngModelChange)="handleChange(editform.form.valid)">
 		  {{course.duration | duration}}
-		  <span></span>
+		  <div class="form-control-feedback" *ngIf="duration.invalid && duration.dirty">Required</div>
 	    </div>
 	 </div>
+	 <div class="form-group" [ngClass]="{'has-danger': false}">
+		 <label class="control-label col-sm-2" for="duration">Authors</label>
+ 	     <div class="col-sm-10">
+ 	     	<checklist [list]="course.authors"></checklist>
+ 	     </div>
+	 </div>
+	 <div *ngIf="editform.form.valid">{{editform.form.valid}}</div>
 </form>

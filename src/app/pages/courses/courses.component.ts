@@ -19,6 +19,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	private current: number;
 	private pages: number;
 	private currDate: Date;
+	private editFormValid: boolean;
 	private fakeArray: Array<any>;
 	private courseServiceSubscription: Subscription;
 	private deleteId: number;
@@ -34,7 +35,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		this.pages = 1;
 		this.fakeArray = [];
 		this.coursesAll = [];
-		this.course = new Course(null, null, null, null, null, null);
+		this.course = new Course(null, null, null, null, null, null, []);
 	}
 
 	public ngOnInit() {
@@ -58,6 +59,11 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		dialog.open();
 	}
 
+	private handleEditValidation(valid: boolean) {
+		console.log('handleEditValidation', valid);
+		this.editFormValid = valid;
+	}
+
 	private handleEditId(id, dialog: Md2Dialog) {
 		this.loaderService.show();
 		this.courseServiceSubscription = this.courseService.getOne(id).subscribe((res: Course) => {
@@ -71,7 +77,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	}
 
 	private handleNew(dialog: Md2Dialog) {
-		this.course = new Course(null, null, null, null, null, null);
+		this.course = new Course(null, null, null, null, null, null, []);
 		dialog.open();
 	}
 
@@ -115,7 +121,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 				this.current = parseInt(res.current);
 				this.coursesAll = this.courses.slice(0);
 			});
-			this.course = new Course(null, null, null, null, null, null);
+			this.course = new Course(null, null, null, null, null, null, []);
 
 			this.loaderService.hide();
 		}, 5000);
@@ -142,7 +148,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 	private close(dialog: any) {
 		dialog.close();
-		this.course = new Course(null, null, null, null, null, null);
+		this.course = new Course(null, null, null, null, null, null, []);
 		this.deleteId = 0;
 	}
 

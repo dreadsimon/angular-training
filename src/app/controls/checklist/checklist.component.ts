@@ -1,42 +1,50 @@
 import { Component, forwardRef, Input  } from '@angular/core';
 import { NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, Validator, ControlValueAccessor } from '@angular/forms';
-import * as moment from 'moment';
 
 const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => InputDateComponent),
+    useExisting: forwardRef(() => CheckListComponent),
     multi: true
 };
 
 const CUSTOM_INPUT_CONTROL_VALIDATOR = {
   provide: NG_VALIDATORS,
-  useExisting: forwardRef(() => InputDateComponent),
+  useExisting: forwardRef(() => CheckListComponent),
   multi: true,
 };
 
 @Component({
-	selector: 'date',
+	selector: 'checklist',
 	template:
-    `<input [value]="viewValue"
-                [placeholder]="acceptedFormat"
-				class="form-control input-date"
-				(blur)="onChange($event)">`,
-	styleUrls: ['./inputdate.component.scss'],
+    `<div>
+        <div *ngFor="let author of list">
+            <label class="custom-control custom-checkbox" for="'inpauthor-'+author.id">
+              <input type="checkbox" class="custom-control-input"
+              name="'inpauthor-'+author.id"
+              id="'inpauthor-'+author.id"
+              [(ngModel)]="author.selected"
+              (change)="onChange($event)"
+              >
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">{{author.firstName}} {{author.lastName}}</span>
+            </label>
+        </div>
+    </div>`,
+	styleUrls: ['./checklist.component.scss'],
 	providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR, CUSTOM_INPUT_CONTROL_VALIDATOR]
 })
-export class InputDateComponent implements ControlValueAccessor, Validator {
+export class CheckListComponent implements ControlValueAccessor, Validator {
+     @Input() public list: Array<Object>;
      @Input() public control: FormControl;
     private viewValue: string;
     private modelValue: string;
-    private acceptedFormat: 'DD/MM/YYYY'
     private _onChange: Function;
     private _onTouched: Function;
     private propagateChange = (_: any) => { };
     private dateError: boolean;
 
     public validate(c: FormControl) {
-        const DATE_REGEXP = new RegExp(/^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$/);
-        return (!this.dateError && DATE_REGEXP.test(c.value)) ? null : { dateFormatError: {valid: false} };
+        return (!this.dateError && c.value.length) ? null : { authorsLength: {valid: false} };
     }
 
     onTouched = () => {};
@@ -44,7 +52,6 @@ export class InputDateComponent implements ControlValueAccessor, Validator {
     //From ControlValueAccessor interface
     public writeValue(value: any) {
         this.modelValue = value;
-        this.viewValue = value ? moment(value).format(this.acceptedFormat) : null;
     }
 
     //From ControlValueAccessor interface
@@ -58,7 +65,8 @@ export class InputDateComponent implements ControlValueAccessor, Validator {
     }
 
     private onChange(event) {
-        this.modelValue = event.target.value;
+        console.log('event', event);
+        this.modelValue = event.target.checked;
         this.dateError = false;
         this.propagateChange(this.modelValue);
     }

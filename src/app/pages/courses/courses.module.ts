@@ -12,6 +12,7 @@ import { CourseComponent } from './course/course.component';
 import { EditCourseComponent } from './edit/edit.component';
 import { SearchboxModule } from '../../components';
 import { InputDateComponent } from '../../controls/inputdate/inputdate.component';
+import { CheckListComponent } from '../../controls/checklist/checklist.component';
 import { Md2Module }  from 'md2';
 import { FreshDirective } from './../../directives/fresh.directive';
 import { CourseService } from './../../services/course.service';
@@ -31,7 +32,8 @@ import { SearchPipe } from './../../pipes';
 		FreshDirective,
 		DurationPipe,
 		OrderByPipe,
-		InputDateComponent
+		InputDateComponent,
+		CheckListComponent
 	],
 	imports: [
 		routes,

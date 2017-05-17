@@ -39,7 +39,8 @@ export class CourseService {
                         course.description,
                         course.date,
                         course.duration,
-                        course.isTopRated);
+                        course.isTopRated,
+                        course.authors);
                 });
                 return {pages: data.pages, current: data.current, courses};
 
@@ -58,7 +59,8 @@ export class CourseService {
                     course.description,
                     course.date,
                     course.duration,
-                    course.isTopRated);
+                    course.isTopRated,
+                    course.authors);
             });
     }
 

@@ -2,7 +2,7 @@
     <div class="col-sm-1">{{course.id}}</div>
     <div class="col-sm-2">{{course.title | uppercase}}</div>
     <div class="col-sm-3">{{course.description}}</div>
-    <div class="col-sm-1">{{course.date | date : 'dd.MM.yyyy'}}</div>
+    <div class="col-sm-1">{{course.date | date : 'dd/MM/yyyy'}}</div>
     <div class="col-sm-2">
         {{course.duration | duration}}
         <span class="rate-star" *ngIf="course.topRated">★</span>
