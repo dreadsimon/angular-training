@@ -71,6 +71,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	}
 
 	private handleNew(dialog: Md2Dialog) {
+		this.course = new Course(null, null, null, null, null, null);
 		dialog.open();
 	}
 
