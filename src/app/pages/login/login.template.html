@@ -1,12 +1,16 @@
 <div class="login-page page">
 	<h4>Login</h4>
 	<div class="login-form col-sm-3">
-		 <div class="form-group">
-		 	<input type="text" class="form-control" id="login" placeholder="login" [(ngModel)]="credentials.login" />
-		 </div>
-		 <div class="form-group">
-		 	<input type="password" class="form-control" id="login" placeholder="password" [(ngModel)]="credentials.password" />
-		 </div>
-	 	<button type="button" class="btn btn-primary" (click)="handleLogin()">Go</button>
+		<form #loginform="ngForm">
+			 <div class="form-group" [ngClass]="{'has-danger': login.invalid && login.dirty}">
+			 	<input type="text" class="form-control" name="login" id="login" placeholder="login" [(ngModel)]="credentials.login" #login="ngModel" required />
+				<div class="form-control-feedback" *ngIf="login.invalid && login.dirty">Required, maxlength 500 chars</div>
+			 </div>
+			 <div class="form-group" [ngClass]="{'has-danger': password.invalid && password.dirty}">
+			 	<input type="password" class="form-control" name="password" id="password" placeholder="password" [(ngModel)]="credentials.password" #password="ngModel" required />
+				<div class="form-control-feedback" *ngIf="password.invalid && password.dirty">Required, maxlength 500 chars</div>
+			 </div>
+		 	<button type="button" class="btn btn-primary" (click)="handleLogin()" [disabled]="!loginform.form.valid">Go</button>
+		</form>
 	</div>
 </div>
