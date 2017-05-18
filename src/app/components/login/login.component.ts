@@ -17,7 +17,6 @@ export class LoginComponent {
 
 	public ngOnInit() {
 		this.authServiceSubscription = this.authService.getUserInfo().subscribe((res) => {
-			console.log(res);
 			this.login = res.login;
 		});
 	}

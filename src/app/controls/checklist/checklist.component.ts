@@ -18,7 +18,7 @@ const CUSTOM_INPUT_CONTROL_VALIDATOR = {
 	selector: 'checklist',
 	template:
     `<div>
-        <div *ngFor="let author of list">
+        <div *ngFor="let author of modelValue">
             <label class="custom-control custom-checkbox" (for)="author.id">
               <input type="checkbox" class="custom-control-input"
               (name)="author.id"
@@ -35,23 +35,31 @@ const CUSTOM_INPUT_CONTROL_VALIDATOR = {
 	providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR, CUSTOM_INPUT_CONTROL_VALIDATOR]
 })
 export class CheckListComponent implements ControlValueAccessor, Validator {
-     @Input() public list: Array<{id: number, firstName: string, lastName: string, selected: boolean}>;
-     @Input() public control: FormControl;
-    private modelValue = this.list;
-    private _onChange: Function;
-    private _onTouched: Function;
+    @Input() public control: FormControl;
+    private modelValue: Array<{id: number, firstName: string, lastName: string, selected?: boolean}>;
+    // @Input() private set list(list: Array<{id: number, firstName: string, lastName: string, selected?: boolean}>) {
+    //     this.modelValue = list;
+    // };
+    // private get list() {
+    //     return this.modelValue;
+    // }
+
     private propagateChange = (_: any) => { };
+    private onTouched = () => {};
     private dateError: boolean;
 
+
     public validate(c: FormControl) {
+        const validateList = c.value && c.value.find(item => item.selected);
         //check if at least one is selected
-        return (!this.dateError && c.value.find(item => item.selected)) ? null : { authorSelected: {valid: false} };
+        console.log('validate', c.value && c.value.find(item => item.selected) || !c.value);
+        return (validateList) ? null : { authorSelected: {valid: false} };
     }
 
-    onTouched = () => {};
 
     //From ControlValueAccessor interface
     public writeValue(value: any) {
+        console.log('writeValue', value);
         this.modelValue = value;
     }
 
@@ -65,13 +73,12 @@ export class CheckListComponent implements ControlValueAccessor, Validator {
         this.onTouched = fn;
     }
 
-    private onChange(event, id) {
-        console.log('event', event.target.checked, id);
-        this.modelValue = this.modelValue.map(author => {
-            if (author.id = id) author.selected = event.target.checked;
-            return author;
-        });
-        console.log(this.modelValue);
+    public onBlur() {
+        this.onTouched();
+    }
+
+    public onChange(event, id) {
+        console.log('list1', this.modelValue);
         this.dateError = false;
         this.propagateChange(this.modelValue);
     }

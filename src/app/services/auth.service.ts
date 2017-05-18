@@ -25,8 +25,6 @@ export class AuthService {
                 let token = res.json().token;
                 localStorage.setItem('token', token);
                 this.auth.next('login');
-
-                console.log('logged in: ', login);
                 this.router.navigate(['courses']);
             });
 
@@ -49,7 +47,6 @@ export class AuthService {
 
     public getUserInfo() {
         const token =  localStorage.getItem('token');
-        console.log(token);
         let headers = new Headers({ 'Content-Type': 'application/json' });
         headers.set('Authorization', token);
         let options = new RequestOptions({ headers: headers });
@@ -57,7 +54,6 @@ export class AuthService {
         return this.http.post(this.url+'/auth/userinfo', {}, options)
             .map(res => {
                 const user = res.json();
-                console.log('response', user);
                 return new User(
                     user.id,
                     user.name.first,
