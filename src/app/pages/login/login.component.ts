@@ -3,7 +3,9 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../../services';
 import { User } from '../../entities';
 import { LoaderService } from '../../services';
+import { Store } from '@ngrx/store';
 import { Router, RouterModule } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
 	selector: 'login',
@@ -22,16 +24,20 @@ export class LoginComponent implements OnInit, OnDestroy {
 	private currDate: Date;
 	private isLoading: boolean = false;
 	private credentials: {login: string, password: string};
-
-	constructor(private router: Router, private authService: AuthService, private loaderService: LoaderService) {
+	private auth: Observable<any>;
+	constructor(private router: Router, private authService: AuthService, private loaderService: LoaderService, private store: Store<any>) {
 		this.credentials = Object.assign({}, {login: '', password: ''});
+		this.auth = store.select<any>('authStore');
+		this.auth.subscribe(data => {
+            if (data && data.token) {
+                this.router.navigate(['courses']);
+            }
+        });
 	}
 
 	private handleLogin() {
 		if (!!this.credentials.login && !!this.credentials.password) {this.loaderService.show()};
-		this.authService.login(this.credentials.login, this.credentials.password).subscribe(res => {
-			this.router.navigate(['courses']);
-		});
+		this.authService.login(this.credentials.login, this.credentials.password);
 		// this.authService.auth.subscribe(
 		// 	val => {
 		// 		console.log('auth replay subject', val);

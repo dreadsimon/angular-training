@@ -6,6 +6,9 @@ import { CommonModule } from '@angular/common';
 // routes
 import { routes } from './login.routes';
 
+// ngrx
+import { authStore } from './../../stores/auth.store';
+
 // custom components
 import { LoginComponent } from './login.component';
 

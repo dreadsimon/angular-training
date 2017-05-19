@@ -29,7 +29,8 @@ export class InputDateComponent implements ControlValueAccessor, Validator {
     private viewValue: string;
     private modelValue: string;
     private acceptedFormat: 'DD/MM/YYYY'
-    private onTouched = () => {};
+    private _onChange: Function;
+    private _onTouched: Function;
     private propagateChange = (_: any) => { };
     private dateError: boolean;
 
@@ -38,6 +39,7 @@ export class InputDateComponent implements ControlValueAccessor, Validator {
         return (!this.dateError && DATE_REGEXP.test(c.value)) ? null : { dateFormatError: {valid: false} };
     }
 
+    onTouched = () => {};
 
     //From ControlValueAccessor interface
     public writeValue(value: any) {
@@ -53,11 +55,6 @@ export class InputDateComponent implements ControlValueAccessor, Validator {
     //From ControlValueAccessor interface
     public registerOnTouched(fn: any) {
         this.onTouched = fn;
-    }
-
-
-    private onBlur() {
-        this.onTouched();
     }
 
     private onChange(event) {

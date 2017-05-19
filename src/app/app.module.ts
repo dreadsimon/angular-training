@@ -14,6 +14,8 @@ import {
 	PreloadAllModules
 } from '@angular/router';
 
+import { StoreModule } from '@ngrx/store';
+
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -34,6 +36,9 @@ import { LoginModule } from './pages/login';
 import { AuthService } from './services';
 import { AuthGuard } from './services/auth.guard';
 import { CourseService } from './services';
+
+import { authStore } from './stores/auth.store';
+
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -61,7 +66,8 @@ const APP_PROVIDERS = [
 		LogoModule,
 		CoursesModule,
 		LoginModule,
-		LoaderModule
+		LoaderModule,
+		StoreModule.provideStore({ authStore }),
 	],
 	providers: [ // expose our Services and Providers into Angular's dependency injection
 		ENV_PROVIDERS,

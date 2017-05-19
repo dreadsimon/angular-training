@@ -18,7 +18,7 @@ const CUSTOM_INPUT_CONTROL_VALIDATOR = {
 	selector: 'checklist',
 	template:
     `<div>
-        <div *ngFor="let author of modelValue">
+        <div *ngFor="let author of viewValue">
             <label class="custom-control custom-checkbox" (for)="author.id">
               <input type="checkbox" class="custom-control-input"
               (name)="author.id"
@@ -37,6 +37,7 @@ const CUSTOM_INPUT_CONTROL_VALIDATOR = {
 export class CheckListComponent implements ControlValueAccessor, Validator {
     @Input() public control: FormControl;
     private modelValue: Array<{id: number, firstName: string, lastName: string, selected?: boolean}>;
+    private viewValue: Array<{id: number, firstName: string, lastName: string}>;
     // @Input() private set list(list: Array<{id: number, firstName: string, lastName: string, selected?: boolean}>) {
     //     this.modelValue = list;
     // };
@@ -59,8 +60,9 @@ export class CheckListComponent implements ControlValueAccessor, Validator {
 
     //From ControlValueAccessor interface
     public writeValue(value: any) {
-        console.log('writeValue', value);
-        this.modelValue = value;
+        if (value !== undefined) {
+            this.viewValue = value;
+        }
     }
 
     //From ControlValueAccessor interface
@@ -78,7 +80,8 @@ export class CheckListComponent implements ControlValueAccessor, Validator {
     }
 
     public onChange(event, id) {
-        console.log('list1', this.modelValue);
+        console.log('list1', this.modelValue, this.viewValue);
+
         this.dateError = false;
         this.propagateChange(this.modelValue);
     }
