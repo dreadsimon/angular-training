@@ -13,20 +13,23 @@ import { Observable } from 'rxjs/Observable';
 export class LoginComponent {
 	public login: string;
 	private authServiceSubscription: Subscription;
-	private user: Observable<any>;
+	private auth: Observable<any>;
 
 	constructor(private authService: AuthService, private store: Store<any>) {
-		this.user = store.select<any>('authStore');
-		this.user.subscribe(data => {
+		this.auth = store.select<any>('authStore');
+		this.auth.subscribe(data => {
 			console.log('data', data);
-            if (data) {
-                this.login = 'aaa';
+            if (data && data.user) {
+                this.login = data.user.login;
+            }
+			if (data && data.isAuthenticated !== undefined) {
+                this.isAuthenticated = data.isAuthenticated;
             }
         });
 	}
 
 	public ngOnInit() {
-		this.authServiceSubscription = this.authService.getUserInfo();
+		this.authService.getUserInfo();
 	}
 
 	private logout() {
@@ -34,6 +37,6 @@ export class LoginComponent {
 	}
 
 	private isAuthenticated() {
-		return this.authService.isAuthenticated();
+		this.authService.isAuthenticated();
 	}
 }

@@ -1,8 +1,8 @@
 <div class="login">
-	<div *ngIf="!isAuthenticated()">
+	<div *ngIf="!isAuthenticated">
 		<a [routerLink]="'login'">Login</a>
 	</div>
-	<div *ngIf="isAuthenticated()">
+	<div *ngIf="isAuthenticated">
 		<div class="name">{{login}}</div>
 		<a (click)="logout()">logout</a>
 	</div>

@@ -37,6 +37,7 @@ import { AuthService } from './services';
 import { AuthGuard } from './services/auth.guard';
 import { CourseService } from './services';
 
+// Stores
 import { authStore } from './stores/auth.store';
 
 

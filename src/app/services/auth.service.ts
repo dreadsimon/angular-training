@@ -6,13 +6,13 @@ import { Router, RouterModule } from '@angular/router';
 import { apiUrl } from './../data/config';
 import { Store } from '@ngrx/store';
 
-import {LOGIN, LOGOUT, USER_INFO} from '../stores/auth.store';
+import {LOGIN, LOGOUT, USER_INFO, AUTHENTICATED} from '../stores/auth.store';
 
 let HEADER = { headers: new Headers({ 'Content-Type': 'application/json' }) };
 
 @Injectable()
 export class AuthService {
-    private user: User;
+    public user: User;
     private token: string;
     private url: string;
     public auth: ReplaySubject<any>;
@@ -27,7 +27,6 @@ export class AuthService {
         return this.http.post(this.url+'/auth/login', {"login": login, "password": password}, options)
             .map(res => res.json())
             .map(payload => {
-                console.log(payload);
                 let token = payload.token;
                 localStorage.setItem('token', token);
                 this.auth.next('login');
@@ -45,11 +44,12 @@ export class AuthService {
 
     public isAuthenticated() {
         if (!!localStorage.getItem('token')) {
+            this.store.dispatch({type: AUTHENTICATED, payload: {isAuthenticated: true}});
             this.auth.next(true);
-            return true;
-        };
-        this.auth.next(false);
-        return false;
+        } else {
+            this.auth.next(false);
+            this.store.dispatch({type: AUTHENTICATED, payload: {isAuthenticated: false}});
+        }
     }
 
     public getUserInfo() {
@@ -60,7 +60,6 @@ export class AuthService {
         return this.http.post(this.url+'/auth/userinfo', {}, options)
             .map(res => res.json())
             .map(payload => {
-                this.auth.next('getUser');
                 const user = new User(
                     payload.id,
                     payload.name.first,
@@ -70,7 +69,7 @@ export class AuthService {
                     payload.fakeToken,
                     true
                 );
-                return { type: USER_INFO, user }
+                return { type: USER_INFO, payload: {user}};
             })
             .subscribe(action => this.store.dispatch(action));
     }

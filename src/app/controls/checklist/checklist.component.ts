@@ -53,7 +53,7 @@ export class CheckListComponent implements ControlValueAccessor, Validator {
     public validate(c: FormControl) {
         const validateList = c.value && c.value.find(item => item.selected);
         //check if at least one is selected
-        console.log('validate', c.value && c.value.find(item => item.selected) || !c.value);
+        // console.log('validate', c.value && c.value.find(item => item.selected) || !c.value);
         return (validateList) ? null : { authorSelected: {valid: false} };
     }
 
@@ -80,7 +80,7 @@ export class CheckListComponent implements ControlValueAccessor, Validator {
     }
 
     public onChange(event, id) {
-        console.log('list1', this.modelValue, this.viewValue);
+        // console.log('list1', this.modelValue, this.viewValue);
 
         this.dateError = false;
         this.propagateChange(this.modelValue);
