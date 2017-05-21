@@ -28,7 +28,7 @@ export class InputDateComponent implements ControlValueAccessor, Validator {
      @Input() public control: FormControl;
     private viewValue: string;
     private modelValue: string;
-    private acceptedFormat: 'DD/MM/YYYY'
+    private acceptedFormat: string = 'DD/MM/YYYY'
     private _onChange: Function;
     private _onTouched: Function;
     private propagateChange = (_: any) => { };
