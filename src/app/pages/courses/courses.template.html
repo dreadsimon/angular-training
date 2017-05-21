@@ -7,7 +7,7 @@
 </md2-dialog>
 <md2-dialog #edit>
 	<md2-dialog-title>Edit/Add course</md2-dialog-title>
-	<edit [course]="course" (formValid)="handleEditValidation($event)"></edit>
+	<edit [course]="course" [authors]="authors" (formValid)="handleEditValidation($event)"></edit>
 	<md2-dialog-footer>
         <button type="button" class="btn btn-success" (click)="handleSave(edit)" [disabled]="!editFormValid">Ok</button>
         <button type="button" class="btn" (click)="close(edit)">Cancel</button>

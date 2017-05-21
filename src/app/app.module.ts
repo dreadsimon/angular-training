@@ -36,17 +36,20 @@ import { LoginModule } from './pages/login';
 import { AuthService } from './services';
 import { AuthGuard } from './services/auth.guard';
 import { CourseService } from './services';
+import { AuthorService } from './services';
 
 // Stores
 import { authStore } from './stores/auth.store';
 import { courseStore } from './stores/course.store';
+import { authorStore } from './stores/author.store';
 
 
 // Application wide providers
 const APP_PROVIDERS = [
 	AuthService,
 	AuthGuard,
-	CourseService
+	CourseService,
+	AuthorService
 ];
 
 /**
@@ -69,7 +72,7 @@ const APP_PROVIDERS = [
 		CoursesModule,
 		LoginModule,
 		LoaderModule,
-		StoreModule.provideStore({ authStore, courseStore }),
+		StoreModule.provideStore({ authStore, courseStore, authorStore }),
 	],
 	providers: [ // expose our Services and Providers into Angular's dependency injection
 		ENV_PROVIDERS,

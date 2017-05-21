@@ -1,7 +1,9 @@
 import { Component, ViewEncapsulation, OnInit, OnDestroy, ChangeDetectionStrategy, NgZone, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Course } from '../../entities';
+import { Author } from '../../entities';
 import { CourseService } from '../../services';
+import { AuthorService } from '../../services';
 import { LoaderService } from '../../services';
 import { Md2Dialog } from 'md2';
 import { SearchPipe } from './../../pipes';
@@ -18,6 +20,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	private course: Course;
 	private courses: Course[];
 	private coursesAll: Course[];
+	private authors: Array<any>;
 	private current: number;
 	private pages: number;
 	private currDate: Date;
@@ -25,8 +28,11 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	private fakeArray: Array<any>;
 	private deleteId: number;
 	private coursesData: Observable<any>;
+	private authorsData: Observable<any>;
 
-	constructor(private courseService: CourseService,
+	constructor(
+		private courseService: CourseService,
+		private authorService: AuthorService,
 		private loaderService: LoaderService,
 		private changeDetectorRef: ChangeDetectorRef,
 		private searchPipe: SearchPipe,
@@ -37,6 +43,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		this.pages = 1;
 		this.fakeArray = [''];
 		this.courses = [];
+		this.authors = [{id: 1212121212, firstName: 'asas', lastName: 'null'}];
 		this.coursesAll = [];
 		this.course = new Course(null, null, null, null, null, null, []);
 		this.coursesData = store.select<any>('courseStore');
@@ -56,23 +63,29 @@ export class CoursesComponent implements OnInit, OnDestroy {
             }
 			if(data && (data.isDeleted || data.isUpdated)) {
 				console.log('deleted or updated');
-
-				this.courseService.getList('', this.current, 10);
 			}
 			if (data && data.course) {
 				setTimeout(() => {
 					this.course = Object.assign({}, data.course);
-
 					this.loaderService.hide();
 				}, 1000);
 			}
         });
+		this.authorsData = store.select<any>('authorStore');
+		this.authorsData.subscribe(data => {
+			if (data && data.authors) {
+				setTimeout(() => {
+					this.authors = data.authors;
+				}, 1000);
+            }
+		});
 	}
 
 	public ngOnInit() {
 		this.loaderService.show();
 		// get first portion of courses
 		this.courseService.getList('', this.current, 10);
+		this.authorService.getList();
 	}
 
 	private handleDeleteId(id, dialog: Md2Dialog) {
@@ -87,6 +100,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	private handleEditId(id, dialog: Md2Dialog) {
 		this.loaderService.show();
 		this.courseService.getOne(id);
+		console.log('open edit this.authors', this.authors);
 		dialog.open();
 	}
 

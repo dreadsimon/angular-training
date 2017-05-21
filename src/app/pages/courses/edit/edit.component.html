@@ -34,6 +34,9 @@
  	     	<checklist name="authors" #authors="ngModel" [(ngModel)]="course.authors"></checklist>
 			<div class="form-control-feedback" *ngIf="authors.invalid && authors.dirty">Select at least one author</div>
  	     </div>
+		 <div>
+		 	<div *ngIf="authors.length">All Authors: {{authors}}</div>
+		 </div>
 	 </div>
 	 <div *ngIf="editform.form.valid">{{editform.form.valid}}</div>
 	  <pre>{{ editform.form.value | json }}</pre>
