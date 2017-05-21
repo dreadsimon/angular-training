@@ -39,6 +39,7 @@ import { CourseService } from './services';
 
 // Stores
 import { authStore } from './stores/auth.store';
+import { courseStore } from './stores/course.store';
 
 
 // Application wide providers
@@ -68,7 +69,7 @@ const APP_PROVIDERS = [
 		CoursesModule,
 		LoginModule,
 		LoaderModule,
-		StoreModule.provideStore({ authStore }),
+		StoreModule.provideStore({ authStore, courseStore }),
 	],
 	providers: [ // expose our Services and Providers into Angular's dependency injection
 		ENV_PROVIDERS,

@@ -18,7 +18,6 @@ export class LoginComponent {
 	constructor(private authService: AuthService, private store: Store<any>) {
 		this.auth = store.select<any>('authStore');
 		this.auth.subscribe(data => {
-			console.log('data', data);
             if (data && data.user) {
                 this.login = data.user.login;
             }

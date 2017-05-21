@@ -5,6 +5,8 @@ import { CourseService } from '../../services';
 import { LoaderService } from '../../services';
 import { Md2Dialog } from 'md2';
 import { SearchPipe } from './../../pipes';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
 	selector: 'courses',
@@ -21,37 +23,54 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	private currDate: Date;
 	private editFormValid: boolean;
 	private fakeArray: Array<any>;
-	private courseServiceSubscription: Subscription;
 	private deleteId: number;
+	private coursesData: Observable<any>;
 
 	constructor(private courseService: CourseService,
 		private loaderService: LoaderService,
 		private changeDetectorRef: ChangeDetectorRef,
-		private searchPipe: SearchPipe
+		private searchPipe: SearchPipe,
+		private store: Store<any>
 	) {
 		this.currDate = new Date();
-		this.courses = [];
 		this.current = 1;
 		this.pages = 1;
 		this.fakeArray = [];
+		this.courses = [];
 		this.coursesAll = [];
 		this.course = new Course(null, null, null, null, null, null, []);
+		this.coursesData = store.select<any>('courseStore');
+		this.coursesData.subscribe(data => {
+            if (data && data.courses) {
+				setTimeout(() => {
+					this.courses = data.courses;
+					this.pages = parseInt(data.pages);
+					this.fakeArray = new Array(this.pages);
+					this.current = parseInt(data.current);
+					this.coursesAll = this.courses.slice(0);
+
+					this.loaderService.hide();
+				}, 1000);
+            }
+			if(data && (data.isDeleted || data.isUpdated)) {
+				console.log('deleted or updated');
+
+				this.courseService.getList('', this.current, 10);
+			}
+			if (data && data.course) {
+				setTimeout(() => {
+					this.course = Object.assign({}, data.course);
+
+					this.loaderService.hide();
+				}, 1000);
+			}
+        });
 	}
 
 	public ngOnInit() {
 		this.loaderService.show();
 		// get first portion of courses
-		this.courseServiceSubscription = this.courseService.getList('', this.current, 10).subscribe((res) => {
-			setTimeout(() => {
-				this.courses = res.courses;
-				this.pages = parseInt(res.pages);
-				this.fakeArray = new Array(this.pages);
-				this.current = parseInt(res.current);
-				this.coursesAll = this.courses.slice(0);
-
-				this.loaderService.hide();
-			}, 1000);
-		});
+		this.courseService.getList('', this.current, 10);
 	}
 
 	private handleDeleteId(id, dialog: Md2Dialog) {
@@ -66,13 +85,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 	private handleEditId(id, dialog: Md2Dialog) {
 		this.loaderService.show();
-		this.courseServiceSubscription = this.courseService.getOne(id).subscribe((res: Course) => {
-			setTimeout(() => {
-				this.course = Object.assign({}, res);
-
-				this.loaderService.hide();
-			}, 1000);
-		});
+		this.courseService.getOne(id);
 		dialog.open();
 	}
 
@@ -86,18 +99,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 		this.loaderService.show();
 		setTimeout(() => {
-			this.courseService.delete(this.deleteId).subscribe(res => {
-				console.log(res);
-			}, err => {
-				console.error(err);
-			});
-			this.courseService.getList('', this.current, 10).subscribe((res) => {
-				this.courses = res.courses;
-				this.pages = parseInt(res.pages);
-				this.fakeArray = new Array(this.pages);
-				this.current = parseInt(res.current);
-				this.coursesAll = this.courses.slice(0);
-			});
+			this.courseService.delete(this.deleteId);
 			this.deleteId = 0;
 
 			this.loaderService.hide();
@@ -109,18 +111,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 		this.loaderService.show();
 		setTimeout(() => {
-			this.courseService.update(this.course).subscribe(res => {
-				console.log(res);
-			}, err => {
-				console.error(err);
-			});
-			this.courseService.getList('', this.current, 10).subscribe((res) => {
-				this.courses = res.courses;
-				this.pages = parseInt(res.pages);
-				this.fakeArray = new Array(this.pages);
-				this.current = parseInt(res.current);
-				this.coursesAll = this.courses.slice(0);
-			});
+			this.courseService.update(this.course);
+
 			this.course = new Course(null, null, null, null, null, null, []);
 
 			this.loaderService.hide();
@@ -129,21 +121,13 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 	private handleSearch(phrase: string) {
 		console.log(phrase);
-		this.courseService.getList(phrase, this.current, 10).subscribe((res) => {
-			this.courses = res.courses;
-			this.pages = parseInt(res.pages);
-			this.fakeArray = new Array(this.pages);
-			this.current = parseInt(res.current);
-		});
+		this.courseService.getList(phrase, this.current, 10);
+		// should be without coursesAll, check
 	}
 
 	private changePagination(i: number) {
-		this.courseService.getList('', i, 10).subscribe((res) => {
-			this.courses = res.courses;
-			this.pages = parseInt(res.pages);
-			this.fakeArray = new Array(this.pages);
-			this.current = parseInt(res.current);
-		});
+		this.courseService.getList('', i, 10);
+		// should be without coursesAll, check
 	}
 
 	private close(dialog: any) {
@@ -153,6 +137,5 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	}
 
 	public ngOnDestroy() {
-		this.courseServiceSubscription.unsubscribe();
 	}
 }
