@@ -7,7 +7,6 @@ export const UPDATE = 'update';
 export const DELETE = 'delete';
 
 export const courseStore: ActionReducer<any> = (state: any = {courses: [], course: {}, isDeleted: false, isUpdated: false}, {type, payload}) => {
-    console.log('course store', state, type, payload);
     switch (type) {
         case GET_ALL:
             return {...state, pages: payload.pages, current: payload.current, courses: payload.courses};

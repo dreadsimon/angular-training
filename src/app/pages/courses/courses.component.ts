@@ -48,7 +48,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
 					if (this.pages > 0){
 						this.fakeArray = Array(this.pages).fill('');
 					}
-					console.log('coursesData', this.pages, this.fakeArray);
 					this.current = parseInt(data.current);
 					this.coursesAll = this.courses.slice(0);
 
@@ -82,7 +81,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	}
 
 	private handleEditValidation(valid: boolean) {
-		console.log('handleEditValidation', valid);
 		this.editFormValid = valid;
 	}
 
@@ -123,7 +121,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	}
 
 	private handleSearch(phrase: string) {
-		console.log(phrase);
 		this.courseService.getList(phrase, this.current, 10);
 		// should be without coursesAll, check
 	}
