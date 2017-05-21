@@ -33,9 +33,9 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		private store: Store<any>
 	) {
 		this.currDate = new Date();
-		this.current = 1;
+		this.current = 0;
 		this.pages = 1;
-		this.fakeArray = [];
+		this.fakeArray = [''];
 		this.courses = [];
 		this.coursesAll = [];
 		this.course = new Course(null, null, null, null, null, null, []);
@@ -45,7 +45,10 @@ export class CoursesComponent implements OnInit, OnDestroy {
 				setTimeout(() => {
 					this.courses = data.courses;
 					this.pages = parseInt(data.pages);
-					this.fakeArray = new Array(this.pages);
+					if (this.pages > 0){
+						this.fakeArray = Array(this.pages).fill('');
+					}
+					console.log('coursesData', this.pages, this.fakeArray);
 					this.current = parseInt(data.current);
 					this.coursesAll = this.courses.slice(0);
 

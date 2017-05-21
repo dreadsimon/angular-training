@@ -7,12 +7,12 @@ export const UPDATE = 'update';
 export const DELETE = 'delete';
 
 export const courseStore: ActionReducer<any> = (state: any = {courses: [], course: {}, isDeleted: false, isUpdated: false}, {type, payload}) => {
-    console.log('store', state, type, payload);
+    console.log('course store', state, type, payload);
     switch (type) {
         case GET_ALL:
-            return {pages: payload.pages, current: payload.current, courses: payload.courses};
+            return {...state, pages: payload.pages, current: payload.current, courses: payload.courses};
         case GET_ONE:
-            return {course: payload.course};
+            return {...state, course: payload.course};
         case ADD:
         case UPDATE: {
             return {isUpdated: true};

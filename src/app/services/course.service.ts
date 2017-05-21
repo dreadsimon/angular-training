@@ -22,7 +22,7 @@ export class CourseService {
             params.set('q', search);
             options.search = params;
         }
-        if (!!page) {
+        if (page> -1) {
             let params: URLSearchParams = new URLSearchParams();
             params.set('page', ''+page);
             params.set('count', ''+step);

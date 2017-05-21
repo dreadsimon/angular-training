@@ -6,7 +6,6 @@ export const USER_INFO = 'userinfo';
 export const AUTHENTICATED = 'authenticated';
 
 export const authStore: ActionReducer<any> = (state: any = {user: {}, isAuthenticated: false, token: null}, {type, payload}) => {
-    console.log('store', state, type, payload);
     switch (type) {
         case LOGIN:
             return {token: payload.token};
