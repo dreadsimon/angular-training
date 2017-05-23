@@ -17,13 +17,12 @@ export class CourseService {
 
     public getList(search?: string, page?: number, step?: number) {
         let options = new RequestOptions(HEADER);
+        let params: URLSearchParams = new URLSearchParams();
         if (!!search) {
-            let params: URLSearchParams = new URLSearchParams();
             params.set('q', search);
             options.search = params;
         }
         if (page > -1) {
-            let params: URLSearchParams = new URLSearchParams();
             params.set('page', '' + page);
             params.set('count', '' + step);
             options.search = params;
