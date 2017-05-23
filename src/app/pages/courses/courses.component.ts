@@ -63,6 +63,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
             }
 			if(data && (data.isDeleted || data.isUpdated)) {
 				console.log('deleted or updated');
+				this.courseService.getList('', this.current, 10);
 			}
 			if (data && data.course) {
 				setTimeout(() => {
