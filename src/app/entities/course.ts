@@ -5,7 +5,7 @@ interface CourseItem {
 	date: Date;
 	duration: number;
 	topRated: boolean;
-	authors: Array<Object>;
+	authors: Array<Number>;
 }
 
 export class Course implements CourseItem {
@@ -15,9 +15,9 @@ export class Course implements CourseItem {
 	public date: Date;
 	public duration: number;
 	public topRated: boolean;
-	public authors: Array<Object>;
+	public authors: Array<Number>;
 
-	constructor(id: number, title: string, description: string, date: Date, duration: number, topRated: boolean, authors: Array<Object>) {
+	constructor(id: number, title: string, description: string, date: Date, duration: number, topRated: boolean, authors: Array<Number>) {
 		this.id = id;
 		this.title = title;
 		this.description = description;

@@ -35,6 +35,5 @@
 			<div class="form-control-feedback" *ngIf="authorslist.invalid && authorslist.dirty">Select at least one author</div>
  	     </div>
 	 </div>
-	 <div *ngIf="editform.form.valid">{{editform.form.valid}}</div>
-	  <pre>{{ editform.form.value | json }}</pre>
+	 <div *ngIf="editform.form.valid">Form valid: {{editform.form.valid}}</div>
 </form>

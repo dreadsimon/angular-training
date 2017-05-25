@@ -74,7 +74,8 @@ export class CourseService {
             description: course.description,
             date: new Date(course.date),
             duration: course.duration,
-            isTopRated: course.topRated
+            isTopRated: course.topRated,
+            authors: course.authors
         };
         if (!!course.id) {
             return this.http.put(this.url + '/courses/' + course.id, item, options)

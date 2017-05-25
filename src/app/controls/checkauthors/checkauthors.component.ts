@@ -56,8 +56,9 @@ export class CheckAuthorsComponent implements ControlValueAccessor, Validator {
 
     //From ControlValueAccessor interface
     public writeValue(value: any) {
+        console.log('write value ', value);
         if (value !== undefined) {
-            this.viewValue = value;
+            this.selectedAuthors = value;
         }
     }
 
@@ -86,8 +87,9 @@ export class CheckAuthorsComponent implements ControlValueAccessor, Validator {
             console.log(this.selectedAuthors);
         } else {
             this.selectedAuthors = this.selectedAuthors.filter(authorId => authorId !== id);
+            console.log('remove', this.selectedAuthors);
         }
         this.dateError = false;
-        this.propagateChange(this.viewValue);
+        this.propagateChange(this.selectedAuthors);
     }
 }
