@@ -18,11 +18,9 @@ export class EditCourseComponent {
 
 	}
 	public ngOnInit() {
-		console.log('ngOnInit', this.authors);
 	}
 
 	private handleChange(valid) {
-		console.log('this.authors', this.authors);
 		this.formValid.emit(valid);
 	}
 }

@@ -4,26 +4,26 @@ import { Course } from '../../entities';
 
 const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => CheckListComponent),
+    useExisting: forwardRef(() => CheckAuthorsComponent),
     multi: true
 };
 
 const CUSTOM_INPUT_CONTROL_VALIDATOR = {
   provide: NG_VALIDATORS,
-  useExisting: forwardRef(() => CheckListComponent),
+  useExisting: forwardRef(() => CheckAuthorsComponent),
   multi: true,
 };
 
 @Component({
-	selector: 'checklist',
+	selector: 'checkauthors',
 	template:
     `<div>
-        <div *ngFor="let author of viewValue">
+        <div *ngFor="let author of allAuthors">
             <label class="custom-control custom-checkbox" (for)="author.id">
               <input type="checkbox" class="custom-control-input"
               (name)="author.id"
               (id)="author.id"
-              [(ngModel)]="author.selected"
+              [checked]="isChecked(author.id)"
               (change)="onChange($event, author.id)"
               >
               <span class="custom-control-indicator"></span>
@@ -31,11 +31,14 @@ const CUSTOM_INPUT_CONTROL_VALIDATOR = {
             </label>
         </div>
     </div>`,
-	styleUrls: ['./checklist.component.scss'],
+	styleUrls: ['./checkauthors.component.scss'],
 	providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR, CUSTOM_INPUT_CONTROL_VALIDATOR]
 })
-export class CheckListComponent implements ControlValueAccessor, Validator {
+export class CheckAuthorsComponent implements ControlValueAccessor, Validator {
     @Input() public control: FormControl;
+    @Input() public allAuthors: Array<any>;
+    @Input() public selectedAuthors: Array<any>;
+
     private modelValue: Array<{id: number, firstName: string, lastName: string, selected?: boolean}>;
     private viewValue: Array<{id: number, firstName: string, lastName: string}>;
     private propagateChange = (_: any) => { };
@@ -44,7 +47,8 @@ export class CheckListComponent implements ControlValueAccessor, Validator {
 
 
     public validate(c: FormControl) {
-        const validateList = c.value && c.value.find(item => item.selected);
+        console.log('validate', c.value);
+        const validateList = c.value && c.value.length;
         //check if at least one is selected
         return (validateList) ? null : { authorSelected: {valid: false} };
     }
@@ -71,7 +75,18 @@ export class CheckListComponent implements ControlValueAccessor, Validator {
         this.onTouched();
     }
 
+    public isChecked(id) {
+        return this.selectedAuthors && this.selectedAuthors.find(i => i ===id);
+    }
     public onChange(event, id) {
+        console.log(this.selectedAuthors, event.target.checked, id, this.allAuthors.find(author => author.id === id));
+        //map selected to object
+        if (event.target.checked) {
+            this.selectedAuthors.push(id);
+            console.log(this.selectedAuthors);
+        } else {
+            this.selectedAuthors = this.selectedAuthors.filter(authorId => authorId !== id);
+        }
         this.dateError = false;
         this.propagateChange(this.viewValue);
     }

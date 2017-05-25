@@ -101,7 +101,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	private handleEditId(id, dialog: Md2Dialog) {
 		this.loaderService.show();
 		this.courseService.getOne(id);
-		console.log('open edit this.authors', this.authors);
 		dialog.open();
 	}
 
