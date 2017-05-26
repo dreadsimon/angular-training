@@ -2,28 +2,28 @@
 	<div class="form-group" [ngClass]="{'has-danger': title.invalid && title.dirty}">
 		<label class="control-label col-sm-2" for="title">Title</label>
 	    <div class="col-sm-10">
-	      <input type="text" class="form-control" id="title" name="title" #title="ngModel" [(ngModel)]="course.title" maxlength="50" required (blur)="handleChange(editform.form.valid)">
+	      <input type="text" class="form-control" id="title" name="title" #title="ngModel" [(ngModel)]="course.title" maxlength="50" required>
 		  <div class="form-control-feedback" *ngIf="title.invalid && title.dirty">Required, maxlength 50 chars </div>
 	    </div>
 		 </div>
 	<div class="form-group" [ngClass]="{'has-danger': description.invalid && description.dirty}">
 		<label class="control-label col-sm-2" for="description">Description</label>
 	    <div class="col-sm-10">
-	      <textarea class="form-control" id="description" name="description" rows="10" cols="300" [(ngModel)]="course.description" maxlength="500" required #description="ngModel" (blur)="handleChange(editform.form.valid)"></textarea>
+	      <textarea class="form-control" id="description" name="description" rows="10" cols="300" [(ngModel)]="course.description" maxlength="500" required #description="ngModel"></textarea>
 		  <div class="form-control-feedback" *ngIf="description.invalid && description.dirty">Required, maxlength 500 chars</div>
 	    </div>
 		 </div>
 	<div class="form-group" [ngClass]="{'has-danger': date.invalid && date.dirty}">
 		<label class="control-label col-sm-2" for="date">Date</label>
 	    <div class="col-sm-10">
-	      <date id="date" name="date" [(ngModel)]="course.date" #date="ngModel" (blur)="handleChange(editform.form.valid)"></date>
+	      <date id="date" name="date" [(ngModel)]="course.date" #date="ngModel"></date>
 		  <div class="form-control-feedback" *ngIf="date.invalid && date.dirty">Invalid date, valid format: DD/MM/YYYY</div>
 	    </div>
 		 </div>
 	<div class="form-group" [ngClass]="{'has-danger': duration.invalid && duration.dirty}">
 		<label class="control-label col-sm-2" for="duration">Duration</label>
 	    <div class="col-sm-10">
-	      <input type="number" class="form-control" id="duration" name="duration" #duration="ngModel" [(ngModel)]="course.duration" required (blur)="handleChange(editform.form.valid)">
+	      <input type="number" class="form-control" id="duration" name="duration" #duration="ngModel" [(ngModel)]="course.duration" required>
 		  {{course.duration | duration}}
 		  <div class="form-control-feedback" *ngIf="duration.invalid && duration.dirty">Required</div>
 	    </div>
