@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input  } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, Validator, ControlValueAccessor } from '@angular/forms';
 import * as moment from 'moment';
 
@@ -9,26 +9,26 @@ const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 };
 
 const CUSTOM_INPUT_CONTROL_VALIDATOR = {
-  provide: NG_VALIDATORS,
-  useExisting: forwardRef(() => InputDateComponent),
-  multi: true,
+    provide: NG_VALIDATORS,
+    useExisting: forwardRef(() => InputDateComponent),
+    multi: true,
 };
 
 @Component({
-	selector: 'date',
-	template:
+    selector: 'date',
+    template:
     `<input [value]="viewValue"
                 [placeholder]="acceptedFormat"
 				class="form-control input-date"
 				(blur)="onChange($event)">`,
-	styleUrls: ['./inputdate.component.scss'],
-	providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR, CUSTOM_INPUT_CONTROL_VALIDATOR]
+    styleUrls: ['./inputdate.component.scss'],
+    providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR, CUSTOM_INPUT_CONTROL_VALIDATOR]
 })
 export class InputDateComponent implements ControlValueAccessor, Validator {
-     @Input() public control: FormControl;
+    @Input() public control: FormControl;
     private viewValue: string;
     private modelValue: string;
-    private acceptedFormat: string = 'DD/MM/YYYY'
+    private acceptedFormat: string = 'DD/MM/YYYY';
     private _onChange: Function;
     private _onTouched: Function;
     private propagateChange = (_: any) => { };
@@ -36,15 +36,33 @@ export class InputDateComponent implements ControlValueAccessor, Validator {
 
     public validate(c: FormControl) {
         const DATE_REGEXP = new RegExp(/^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$/);
-        return (!this.dateError && DATE_REGEXP.test(c.value)) ? null : { dateFormatError: {valid: false} };
+
+        let value = c.value;
+
+        // If the value is date(on initalized from course object(edit course form)) then convert to valid string.
+        if (value && value.valueOf && !isNaN(value.valueOf())) {
+            value = moment(value as Date).format(this.acceptedFormat);
+        }
+
+        let validateResult = { dateFormatError: { valid: false } };
+
+        // Initalized with null value(add course form), then when user change the input, string values(c.value) triggers.
+        if (value === null) {
+            validateResult = null;
+        } else if (!this.dateError && DATE_REGEXP.test(value)) { // Validate value with regex.
+            validateResult = null;
+        }
+
+        return validateResult;
     }
 
-    onTouched = () => {};
+    onTouched = () => { };
 
     //From ControlValueAccessor interface
     public writeValue(value: any) {
         this.modelValue = value;
         this.viewValue = value ? moment(value).format(this.acceptedFormat) : null;
+        this.propagateChange(this.modelValue);
     }
 
     //From ControlValueAccessor interface
