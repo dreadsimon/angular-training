@@ -14,12 +14,19 @@ import {
 import { MockBackend } from '@angular/http/testing';
 import { OrderByPipe } from './../../pipes';
 import { CourseService } from './../../services/course.service';
+import { AuthorService } from './../../services/author.service';
+import { LoaderService } from './../../services/loader.service';
 import { Store } from '@ngrx/store';
+import { SearchPipe } from './../../pipes';
 
 /**
  * Load the implementations that should be tested.
  */
 import { CoursesComponent } from './courses.component';
+
+export class MockStore implements Store {
+  //implement your mock methods here.
+}
 
 describe(`Courses`, () => {
   let comp: CoursesComponent;
@@ -36,8 +43,13 @@ describe(`Courses`, () => {
         BaseRequestOptions,
         MockBackend,
         CourseService,
-        Store,
-        //SearchPipe.
+        AuthorService,
+        LoaderService,
+        SearchPipe,
+        {
+            provide: Store,
+            useClass: MockStore
+        },
         {
           provide: Http,
           useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
