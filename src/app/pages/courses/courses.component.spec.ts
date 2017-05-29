@@ -12,13 +12,14 @@ import {
   Http
 } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
+import { OrderByPipe } from './../../pipes';
+import { CourseService } from './../../services/course.service';
+import { Store } from '@ngrx/store';
 
 /**
  * Load the implementations that should be tested.
  */
-import { AppState } from '../app.service';
 import { CoursesComponent } from './courses.component';
-import { Title } from './title';
 
 describe(`Courses`, () => {
   let comp: CoursesComponent;
@@ -29,20 +30,21 @@ describe(`Courses`, () => {
    */
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [HomeComponent],
+      declarations: [CoursesComponent, OrderByPipe],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         BaseRequestOptions,
         MockBackend,
+        CourseService,
+        Store,
+        //SearchPipe.
         {
           provide: Http,
           useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
             return new Http(backend, defaultOptions);
           },
           deps: [MockBackend, BaseRequestOptions]
-        },
-        AppState,
-        Title,
+        }
       ]
     })
     /**
@@ -55,29 +57,13 @@ describe(`Courses`, () => {
    * Synchronous beforeEach.
    */
   beforeEach(() => {
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(CoursesComponent);
     comp = fixture.componentInstance;
-
-    /**
-     * Trigger initial data binding.
-     */
     fixture.detectChanges();
   });
 
-  it('should have default data', () => {
-    expect(comp.localState).toEqual({ value: '' });
-  });
-
-  it('should have a title', () => {
-    expect(!!comp.title).toEqual(true);
-  });
-
-  it('should log ngOnInit', () => {
-    spyOn(console, 'log');
-    expect(console.log).not.toHaveBeenCalled();
-
-    comp.ngOnInit();
-    expect(console.log).toHaveBeenCalled();
+  it('should create component', () => {
+    expect(comp).toBeTruthy();
   });
 
 });
