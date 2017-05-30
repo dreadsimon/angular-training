@@ -1,4 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { FormGroup, NgForm } from "@angular/forms";
+import { FormsModule } from '@angular/forms';
+import { DurationPipe } from './../../../pipes';
 import {
   inject,
   async,
@@ -27,7 +30,8 @@ describe(`Courses`, () => {
    */
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditCourseComponent],
+        imports: [FormsModule ],
+      declarations: [EditCourseComponent,DurationPipe],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         BaseRequestOptions,
