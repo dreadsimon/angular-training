@@ -1,7 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { FormGroup, NgForm } from "@angular/forms";
-import { FormsModule } from '@angular/forms';
+import { FormGroup, NgForm, FormsModule } from "@angular/forms";
 import { DurationPipe } from './../../../pipes';
+import { Course } from '../../../entities';
 import {
   inject,
   async,
@@ -24,16 +24,16 @@ import { EditCourseComponent } from './edit.component';
 describe(`Courses`, () => {
   let comp: EditCourseComponent;
   let fixture: ComponentFixture<EditCourseComponent>;
-
+  let course: Course;
   /**
    * async beforeEach.
    */
   beforeEach(async(() => {
     TestBed.configureTestingModule({
         imports: [FormsModule ],
-      declarations: [EditCourseComponent,DurationPipe],
-      schemas: [NO_ERRORS_SCHEMA],
-      providers: [
+        declarations: [EditCourseComponent,DurationPipe],
+        schemas: [NO_ERRORS_SCHEMA],
+        providers: [
         BaseRequestOptions,
         MockBackend,
         {
@@ -45,10 +45,8 @@ describe(`Courses`, () => {
         }
       ]
     })
-    /**
-     * Compile template and css.
-     */
     .compileComponents();
+     console.log('-------');
   }));
 
   /**
@@ -57,10 +55,14 @@ describe(`Courses`, () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EditCourseComponent);
     comp = fixture.componentInstance;
+    comp.course = new Course(1, 'title', 'description', new Date(), 60, true, [1,2,3]);
+    comp.ngOnInit();
     fixture.detectChanges();
+
   });
 
   it('should create component', () => {
+      console.log('-------', comp.course, comp.editform.invalid);
     expect(comp).toBeTruthy();
   });
 
