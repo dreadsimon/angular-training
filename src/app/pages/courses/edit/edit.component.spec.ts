@@ -12,53 +12,26 @@ import {
   Http
 } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { OrderByPipe } from './../../pipes';
-import { CourseService } from './../../services/course.service';
-import { AuthorService } from './../../services/author.service';
-import { LoaderService } from './../../services/loader.service';
-import { Store } from '@ngrx/store';
-import { SearchPipe } from './../../pipes';
-import {Observable} from "rxjs";
 
 /**
  * Load the implementations that should be tested.
  */
-import { CoursesComponent } from './courses.component';
-
-export class MockStore implements Store {
-    public dispatch(obj) {
-      console.log('dispatching from the mock store!')
-    }
-
-    public select(obj) {
-      console.log('selecting from the mock store!');
-
-      return Observable.of({})
-    }
-}
+import { EditCourseComponent } from './edit.component';
 
 describe(`Courses`, () => {
-  let comp: CoursesComponent;
-  let fixture: ComponentFixture<CoursesComponent>;
+  let comp: EditCourseComponent;
+  let fixture: ComponentFixture<EditCourseComponent>;
 
   /**
    * async beforeEach.
    */
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CoursesComponent, OrderByPipe],
+      declarations: [EditCourseComponent],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         BaseRequestOptions,
         MockBackend,
-        CourseService,
-        AuthorService,
-        LoaderService,
-        SearchPipe,
-        {
-            provide: Store,
-            useClass: MockStore
-        },
         {
           provide: Http,
           useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
@@ -78,7 +51,7 @@ describe(`Courses`, () => {
    * Synchronous beforeEach.
    */
   beforeEach(() => {
-    fixture = TestBed.createComponent(CoursesComponent);
+    fixture = TestBed.createComponent(EditCourseComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -43,7 +43,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		this.pages = 1;
 		this.fakeArray = [''];
 		this.courses = [];
-		this.authors = [{id: 1212121212, firstName: 'asas', lastName: 'null'}];
+		this.authors = [];
 		this.coursesAll = [];
 		this.course = new Course(null, null, null, null, null, null, []);
 		this.coursesData = store.select<any>('courseStore');
