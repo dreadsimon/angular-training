@@ -25,7 +25,7 @@ import {Observable} from "rxjs";
  */
 import { CoursesComponent } from './courses.component';
 
-export class MockStore implements Store {
+export class MockStore {
     public dispatch(obj) {
       console.log('dispatching from the mock store!')
     }

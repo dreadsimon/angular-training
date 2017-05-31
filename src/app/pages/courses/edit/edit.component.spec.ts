@@ -6,7 +6,9 @@ import {
   inject,
   async,
   TestBed,
-  ComponentFixture
+  ComponentFixture,
+  tick,
+  fakeAsync
 } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import {
@@ -30,10 +32,10 @@ describe(`Courses`, () => {
    */
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [FormsModule ],
-        declarations: [EditCourseComponent,DurationPipe],
-        schemas: [NO_ERRORS_SCHEMA],
-        providers: [
+      imports: [FormsModule],
+      declarations: [EditCourseComponent, DurationPipe],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
         BaseRequestOptions,
         MockBackend,
         {
@@ -45,8 +47,7 @@ describe(`Courses`, () => {
         }
       ]
     })
-    .compileComponents();
-     console.log('-------');
+      .compileComponents();
   }));
 
   /**
@@ -55,15 +56,19 @@ describe(`Courses`, () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EditCourseComponent);
     comp = fixture.componentInstance;
-    comp.course = new Course(1, 'title', 'description', new Date(), 60, true, [1,2,3]);
+    comp.course = new Course(1, 'title', 'description', new Date(), 60, true, [1, 2, 3]);
     comp.ngOnInit();
     fixture.detectChanges();
 
   });
 
-  it('should create component', () => {
-      console.log('-------', comp.course, comp.editform.invalid);
+  it('should create component', fakeAsync(() => {
+
+    tick();
+    
     expect(comp).toBeTruthy();
-  });
+    expect(comp.course).toBeTruthy();
+    expect(comp.editform.invalid).toBeFalsy();
+  }));
 
 });
